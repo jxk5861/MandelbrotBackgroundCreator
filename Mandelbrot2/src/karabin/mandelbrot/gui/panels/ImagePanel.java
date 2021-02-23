@@ -31,14 +31,14 @@ public class ImagePanel extends JPanel {
 		this.image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		this.method = method;
 		method.draw(this.image, this.domain);
-
+		
 		this.setPreferredSize(new Dimension(width, height));
 	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(image, this.getX(), this.getY(), null);
+		g.drawImage(image, 0, 0, null);
 	}
 
 	public BufferedImage getImage() {

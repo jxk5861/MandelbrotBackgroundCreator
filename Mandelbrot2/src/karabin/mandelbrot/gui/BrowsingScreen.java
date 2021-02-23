@@ -32,16 +32,16 @@ public class BrowsingScreen extends JFrame{
 		imagePanel = new ImagePanel(width, height, method);
 		imagePanel.addMouseWheelListener(new ZoomMouseWheelListener(imagePanel, width, height));
 		
-		controlsPanel = new ControlsPanel(200, height, escape, coloring, imagePanel);
+		controlsPanel = new ControlsPanel(width, 40, escape, coloring, imagePanel);
 		
 		
 //		imagePanel.setPreferredSize(new Dimension(width, height));
 //		controlsPanel.setPreferredSize(new Dimension(200, height));
 
 		panel = new JPanel();
-		panel.add(imagePanel);
 		panel.add(controlsPanel);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+		panel.add(imagePanel);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
 		this.add(panel);
 		this.pack();

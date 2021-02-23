@@ -28,9 +28,9 @@ public class ZoomMouseWheelListener implements MouseWheelListener {
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
 		Rectangle2D domain = panel.getDomain();
-		
+
 		AffineTransform tr2 = new AffineTransform();
-		double zoom = 1.1;
+		double zoom = 1 + .1 * Math.abs(e.getPreciseWheelRotation());
 		Complex c = MandelbrotUtils.pixelToComplex(e.getPoint().getX(), e.getPoint().getY(), width, height, domain);
 		tr2.translate(c.getReal(), c.getImaginary());
 		tr2.scale(zoom, zoom);
@@ -65,7 +65,7 @@ public class ZoomMouseWheelListener implements MouseWheelListener {
 
 			domain.setRect(l2.getX(), l2.getY(), r2.getX() - l2.getX(), r2.getY() - l2.getY());
 		}
-		
+
 		panel.draw();
 	}
 

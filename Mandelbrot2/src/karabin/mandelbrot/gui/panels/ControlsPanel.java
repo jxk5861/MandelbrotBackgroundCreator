@@ -80,7 +80,7 @@ public class ControlsPanel extends JPanel {
 //			}
 //		});
 		this.add(chooseColor);
-
-		this.setPreferredSize(new Dimension(200, height));
+		
+		this.setPreferredSize(new Dimension(width, height));
 	}
 }
