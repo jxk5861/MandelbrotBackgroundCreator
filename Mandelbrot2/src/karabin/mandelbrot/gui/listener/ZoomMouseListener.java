@@ -1,5 +1,8 @@
 package karabin.mandelbrot.gui.listener;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.AffineTransform;
@@ -12,13 +15,18 @@ import org.apache.commons.math3.complex.Complex;
 import karabin.mandelbrot.gui.panels.ImagePanel;
 import karabin.mandelbrot.utils.MandelbrotUtils;
 
-public class ZoomMouseWheelListener implements MouseWheelListener {
+public class ZoomMouseListener implements MouseWheelListener, MouseListener, MouseMotionListener {
 
 	private ImagePanel panel;
 	private int width;
 	private int height;
 
-	public ZoomMouseWheelListener(ImagePanel panel, int width, int height) {
+	private int x;
+	private int y;
+	private double rx;
+	private double ry;
+
+	public ZoomMouseListener(ImagePanel panel, int width, int height) {
 		super();
 		this.panel = panel;
 		this.width = width;
@@ -69,4 +77,53 @@ public class ZoomMouseWheelListener implements MouseWheelListener {
 		panel.draw();
 	}
 
+	@Override
+	public void mouseClicked(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		this.x = e.getX();
+		this.y = e.getY();
+		
+		this.rx = this.panel.getDomain().getX();
+		this.ry = this.panel.getDomain().getY();
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		this.reDraw(e.getX(), e.getY());
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		this.reDraw(e.getX(), e.getY());
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+
+	}
+
+	private void reDraw(int x, int y) {
+		Complex start = MandelbrotUtils.pixelToComplex(this.x, this.y, width, height, panel.getDomain());
+		Complex end = MandelbrotUtils.pixelToComplex(x, y, width, height, panel.getDomain());
+		Complex offset = start.subtract(end);
+		Rectangle2D domain = panel.getDomain();
+
+		domain.setRect(rx + offset.getReal(),ry + offset.getImaginary(), domain.getWidth(), domain.getHeight());
+
+		panel.draw();
+	}
 }

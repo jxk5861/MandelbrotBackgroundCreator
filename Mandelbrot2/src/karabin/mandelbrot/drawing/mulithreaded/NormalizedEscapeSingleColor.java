@@ -1,5 +1,6 @@
-package karabin.mandelbrot.drawing.mulithreading;
+package karabin.mandelbrot.drawing.mulithreaded;
 
+import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -8,13 +9,11 @@ import java.util.List;
 import org.apache.commons.math3.complex.Complex;
 
 import karabin.mandelbrot.drawing.DrawingMethod;
-import karabin.mandelbrot.drawing.coloring.ColoringIF;
-import karabin.mandelbrot.drawing.escape.EscapeRateIF;
 import karabin.mandelbrot.utils.MandelbrotUtils;
 
-public class MultiThreadedDrawingMethod extends DrawingMethod {
-	public MultiThreadedDrawingMethod(EscapeRateIF escapeRate, ColoringIF coloring) {
-		super(escapeRate, coloring);
+public class NormalizedEscapeSingleColor extends DrawingMethod {
+	public NormalizedEscapeSingleColor(int iterations, int max, Color color) {
+		super(iterations, max, color);
 	}
 
 	@Override
@@ -62,14 +61,16 @@ public class MultiThreadedDrawingMethod extends DrawingMethod {
 
 		@Override
 		public void run() {
+
 			for (int y = startHeight; y < endHeight; y++) {
 				for (int x = 0; x < width; x++) {
 					Complex c = MandelbrotUtils.pixelToComplex(x, y, width, height, domain);
-					double rate = escapeRate.rate(c);
-					int rgb = coloring.color(rate);
+					double rate = NormalizedEscapeSingleColor.this.normalizedEscape(c);
+					int rgb = NormalizedEscapeSingleColor.this.color(rate);
 					image.setRGB(x, y, rgb);
 				}
 			}
 		}
+
 	}
 }

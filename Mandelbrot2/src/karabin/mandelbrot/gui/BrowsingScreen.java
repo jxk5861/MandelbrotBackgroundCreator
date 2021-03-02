@@ -6,35 +6,32 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import karabin.mandelbrot.drawing.DrawingMethodIF;
-import karabin.mandelbrot.drawing.coloring.Coloring;
-import karabin.mandelbrot.drawing.coloring.algorithms.MyColoringAlgorithm;
-import karabin.mandelbrot.drawing.escape.EscapeRate;
-import karabin.mandelbrot.drawing.escape.algorithms.NormalizedEscape;
-import karabin.mandelbrot.drawing.mulithreading.MultiThreadedDrawingMethod;
-import karabin.mandelbrot.gui.listener.ZoomMouseWheelListener;
+import karabin.mandelbrot.drawing.DistanceEstimator;
+import karabin.mandelbrot.drawing.DrawingMethod;
+import karabin.mandelbrot.drawing.mulithreaded.HistogramSingleColor;
+import karabin.mandelbrot.gui.listener.ZoomMouseListener;
 import karabin.mandelbrot.gui.panels.ControlsPanel;
 import karabin.mandelbrot.gui.panels.ImagePanel;
 
-public class BrowsingScreen extends JFrame{
+public class BrowsingScreen extends JFrame {
 	private static final long serialVersionUID = 6785151737124858356L;
 	// seperate into classes.
 	private JPanel panel;
 	private ImagePanel imagePanel;
 	private JPanel controlsPanel;
-	
+
 	public BrowsingScreen(int width, int height) {
-		EscapeRate escape = new NormalizedEscape(0xff, 4);
-		Coloring coloring = new MyColoringAlgorithm(Color.red);
-		DrawingMethodIF method = new MultiThreadedDrawingMethod(escape, coloring);		
-		
-		
+		DrawingMethod method = new HistogramSingleColor(0xff, 4, Color.red);//new DistanceEstimator(0xff, 4, Color.red);
+
 		imagePanel = new ImagePanel(width, height, method);
-		imagePanel.addMouseWheelListener(new ZoomMouseWheelListener(imagePanel, width, height));
 		
-		controlsPanel = new ControlsPanel(width, 40, escape, coloring, imagePanel);
-		
-		
+		ZoomMouseListener listener = new ZoomMouseListener(imagePanel, width, height);
+		imagePanel.addMouseWheelListener(listener);
+		imagePanel.addMouseListener(listener);
+		imagePanel.addMouseMotionListener(listener);
+
+		controlsPanel = new ControlsPanel(width, 40, method, imagePanel);
+
 //		imagePanel.setPreferredSize(new Dimension(width, height));
 //		controlsPanel.setPreferredSize(new Dimension(200, height));
 
@@ -47,5 +44,5 @@ public class BrowsingScreen extends JFrame{
 		this.pack();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-	
+
 }

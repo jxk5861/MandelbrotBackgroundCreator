@@ -1,103 +1,90 @@
 package karabin.mandelbrot.drawing;
 
+import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import org.apache.commons.math3.complex.Complex;
 
-import karabin.mandelbrot.drawing.coloring.ColoringIF;
-import karabin.mandelbrot.drawing.escape.EscapeRateIF;
 import karabin.mandelbrot.utils.MandelbrotUtils;
 
 public abstract class DrawingMethod implements DrawingMethodIF {
 
-	protected EscapeRateIF escapeRate;
-	protected ColoringIF coloring;
+	protected int iterations;
+	protected int max;
+	protected Color color;
 
-	public DrawingMethod(EscapeRateIF escapeRate, ColoringIF coloring) {
+	public DrawingMethod(int iterations, int max, Color color) {
 		super();
-		this.escapeRate = escapeRate;
-		this.coloring = coloring;
+		this.iterations = iterations;
+		this.max = max;
+		this.color = color;
+	}
+
+	protected int color(double rate) {
+		if (rate == -1) {
+			return 0;
+		}
+		double factor = rate / this.iterations;
+		return new Color((int)(factor * color.getRed()), (int) (factor * color.getGreen()), (int)(factor * color.getBlue())).getRGB();
+	}
+
+	protected double normalizedEscape(Complex c) {
+		double real = 0;
+		double image = 0;
+
+		for (int i = 0; i < iterations; i++) {
+			double s1 = real * real;
+			double s2 = image * image;
+			if (s1 + s2 > max) {
+				return i + 1 - Math.log10(Math.log(s1 + s2) / Math.log(2));
+			}
+			double real2 = s1 - s2 + c.getReal();
+			double image2 = 2 * real * image + c.getImaginary();
+			real = real2;
+			image = image2;
+		}
+
+		return -1;
 	}
 
 	@Override
 	public void draw(BufferedImage image, Rectangle2D domain) {
 		int height = image.getHeight();
 		int width = image.getWidth();
-		
+
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				Complex c = MandelbrotUtils.pixelToComplex(x, y, width, height, domain);
-				double rate = escapeRate.rate(c);
-				int rgb = coloring.color(rate);
+				double rate = this.normalizedEscape(c);
+				int rgb = this.color(rate);
 				image.setRGB(x, y, rgb);
 			}
 		}
-		
-//		Complex [][] cs = new Complex[width][height];
-//		double [][] reals = new double[width][height];
-//		double [][] images = new double[width][height];
-//		for(int y = 0; y < height; y++) {
-//			for(int x = 0; x < width; x++) {
-//				Complex c = MandelbrotUtils.pixelToComplex(x, y, width, height, domain);
-//				reals[x][y] = c.getReal();
-//				images[x][y] = c.getImaginary();
-//				cs[x][y] = c;
-//			}
-//		}
-//		
-//		
-//		int [][] rates = new int[width][height];
-//		boolean [][] b = new boolean[width][height];
-//		long start = System.currentTimeMillis();
-//		int mr = 0;
-//		while(System.currentTimeMillis() - start < 1000 || mr < 255) {
-//			for(int y = 0; y < height; y++) {
-//				for(int x = 0; x < width; x++) {
-//					if(b[x][y]) {
-//						continue;
-//					}
-//					Complex c = cs[x][y];
-//					if(inc(x, y, c, reals, images, 4)) {
-//						rates[x][y]++;
-//						if(rates[x][y] > mr) {
-//							mr = rates[x][y];
-//						}
-//					}else {
-//						b[x][y] = true;
-//					}
-//				}
-//			}
-//		}
-//		System.out.println(mr);
-//		
-//		for(int y = 0; y < height; y++) {
-//			for(int x = 0; x < width; x++) {
-//				if(!b[x][y]) {
-//					image.setRGB(x, y, 0);
-//					continue;
-//				}
-//				double s1 = reals[x][y] * reals[x][y];
-//				double s2 = images[x][y] * images[x][y];
-//				double normalizedEscape = rates[x][y] + 1 - Math.log10(Math.log(s1 + s2) / Math.log(2));
-//				int rgb = coloring.color(normalizedEscape);
-//				image.setRGB(x, y, rgb);
-//			}
-//		}
-		
 	}
-	
-//	private boolean inc(int x, int y, Complex c, double [][] reals, double[][] images, int max) {
-//		double s1 = reals[x][y] * reals[x][y];
-//		double s2 = images[x][y] * images[x][y];
-//		if (s1 + s2 > max) {
-//			return false;
-//			//return i + 1 - Math.log10(Math.log(s1 + s2) / Math.log(2));
-//		}
-//		double real2 = s1 - s2 + c.getReal();
-//		double image2 = 2 * reals[x][y] * images[x][y] + c.getImaginary();
-//		reals[x][y] = real2;
-//		images[x][y] = image2;
-//		return true;
-//	}
+
+	public int getIterations() {
+		return iterations;
+	}
+
+	public void setIterations(int iterations) {
+		this.iterations = iterations;
+	}
+
+	public int getMax() {
+		return max;
+	}
+
+	public void setMax(int max) {
+		this.max = max;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
 }
