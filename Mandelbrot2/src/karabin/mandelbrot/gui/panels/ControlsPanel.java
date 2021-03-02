@@ -8,8 +8,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -24,6 +27,9 @@ public class ControlsPanel extends JPanel {
 	private JPanel chooseColor;
 	private JLabel iterationsLabel;
 	private JTextField iterationsField;
+	
+	private JList<DrawingMethod> list;
+	private JButton printButton;
 
 	public ControlsPanel(int width, int height, DrawingMethod method, ImagePanel panel) {
 		this.panel = panel;
@@ -112,9 +118,16 @@ public class ControlsPanel extends JPanel {
 			}
 		});
 
+		printButton = new JButton("Print");
+		DefaultListModel<DrawingMethod> model = new DefaultListModel<DrawingMethod>();
+		model.addElement(method);
+		list = new JList<DrawingMethod>(model);
+		
 		this.add(chooseColor);
 		this.add(iterationsLabel);
 		this.add(iterationsField);
+		this.add(printButton);
+		this.add(list);
 
 		this.setPreferredSize(new Dimension(width, height));
 	}

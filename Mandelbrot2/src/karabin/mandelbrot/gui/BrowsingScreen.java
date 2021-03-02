@@ -3,10 +3,10 @@ package karabin.mandelbrot.gui;
 import java.awt.Color;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import karabin.mandelbrot.drawing.DistanceEstimator;
 import karabin.mandelbrot.drawing.DrawingMethod;
 import karabin.mandelbrot.drawing.mulithreaded.HistogramSingleColor;
 import karabin.mandelbrot.gui.listener.ZoomMouseListener;
@@ -39,7 +39,7 @@ public class BrowsingScreen extends JFrame {
 		panel.add(controlsPanel);
 		panel.add(imagePanel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-
+		
 		this.add(panel);
 		this.pack();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -86,5 +86,9 @@ public abstract class DrawingMethod implements DrawingMethodIF {
 	public void setColor(Color color) {
 		this.color = color;
 	}
-
+	
+	@Override
+	public String toString() {
+		return this.getClass().getSimpleName();
+	}
 }
