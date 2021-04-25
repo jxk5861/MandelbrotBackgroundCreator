@@ -23,7 +23,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import karabin.mandelbrot.DrawingManager;
+import karabin.mandelbrot.drawing.DrawingManager;
 import karabin.mandelbrot.drawing.DrawingMethod;
 import karabin.mandelbrot.printing.ImagePrinter;
 

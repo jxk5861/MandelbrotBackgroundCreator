@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
-import karabin.mandelbrot.DrawingManager;
+import karabin.mandelbrot.drawing.DrawingManager;
 
 public enum ImagePrinter {
 	INSTANCE;

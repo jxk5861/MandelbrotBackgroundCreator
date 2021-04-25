@@ -8,7 +8,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 import javax.swing.JPanel;
 
-import karabin.mandelbrot.DrawingManager;
+import karabin.mandelbrot.drawing.DrawingManager;
 import karabin.mandelbrot.drawing.DrawingMethodIF;
 
 public class ImagePanel extends JPanel {

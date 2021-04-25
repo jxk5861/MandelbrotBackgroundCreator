@@ -1,10 +1,9 @@
-package karabin.mandelbrot;
+package karabin.mandelbrot.drawing;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import karabin.mandelbrot.drawing.DrawingMethod;
 import karabin.mandelbrot.drawing.mulithreaded.HistogramSingleColor;
 import karabin.mandelbrot.drawing.mulithreaded.NormalizedEscapeSingleColor;
 

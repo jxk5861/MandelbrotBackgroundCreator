@@ -1,14 +1,9 @@
 package karabin.mandelbrot.gui;
 
-import java.awt.Color;
-
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import karabin.mandelbrot.drawing.DrawingMethod;
-import karabin.mandelbrot.drawing.mulithreaded.HistogramSingleColor;
 import karabin.mandelbrot.gui.listener.ZoomMouseListener;
 import karabin.mandelbrot.gui.panels.ControlsPanel;
 import karabin.mandelbrot.gui.panels.ImagePanel;
