@@ -9,7 +9,6 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import javax.swing.JPanel;
 
 import karabin.mandelbrot.drawing.DrawingManager;
-import karabin.mandelbrot.drawing.DrawingMethodIF;
 
 public class ImagePanel extends JPanel {
 	private static final long serialVersionUID = -8485184329163899100L;
