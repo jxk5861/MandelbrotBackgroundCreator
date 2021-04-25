@@ -11,8 +11,8 @@ Once a cool looking region is found, it can be exported as an image and used as 
 <img src="Mandelbrot2/sample_images/mandelbrot6.png" alt="drawing" width="400"/>
 --->
 
-<img src="Mandelbrot2/sample_images/generated/Mandelbrot6.png" alt="drawing" width="400"/>
-<img src="Mandelbrot2/sample_images/generated/Mandelbrot7.png" alt="drawing" width="400"/>
-<img src="Mandelbrot2/sample_images/generated/Mandelbrot8.png" alt="drawing" width="400"/>
-<img src="Mandelbrot2/sample_images/generated/Mandelbrot9.png" alt="drawing" width="400"/>
-<img src="Mandelbrot2/sample_images/generated/Mandelbrot10.png" alt="drawing" width="400"/>
+<img src="Mandelbrot2/sample_images/generated/Mandelbrot6.png" alt="drawing" width="600"/>
+<img src="Mandelbrot2/sample_images/generated/Mandelbrot7.png" alt="drawing" width="600"/>
+<img src="Mandelbrot2/sample_images/generated/Mandelbrot8.png" alt="drawing" width="600"/>
+<img src="Mandelbrot2/sample_images/generated/Mandelbrot9.png" alt="drawing" width="600"/>
+<img src="Mandelbrot2/sample_images/generated/Mandelbrot10.png" alt="drawing" width="600"/>
