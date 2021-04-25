@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.commons.math3.complex.Complex;
 
 import karabin.mandelbrot.drawing.DrawingMethod;
+import karabin.mandelbrot.drawing.mulithreaded.renderingsection.RenderingSection;
 import karabin.mandelbrot.utils.MandelbrotUtils;
 
 public class HistogramSingleColor extends DrawingMethod {
@@ -52,10 +53,10 @@ public class HistogramSingleColor extends DrawingMethod {
 
 		int[][] rates = new int[width][height];
 
+		// Make this into a new interruptable thread?
 		for (int i = 0; i < processors; i++) {
-			RenderingSection section = new RenderingSection(width, height, i * height / processors,
+			Thread thread = new HistogramSingleColorSection(width, height, i * height / processors,
 					(i + 1) * height / processors, domain, rates);
-			Thread thread = new Thread(section);
 			threads.add(thread);
 			thread.start();
 		}
@@ -96,28 +97,19 @@ public class HistogramSingleColor extends DrawingMethod {
 		}
 	}
 
-	class RenderingSection implements Runnable {
-		private int width;
-		private int height;
-		private int startHeight;
-		private int endHeight;
-		private Rectangle2D domain;
-		private int[][] rates;
+	class HistogramSingleColorSection extends RenderingSection {
 
-		public RenderingSection(int width, int height, int startHeight, int endHeight, Rectangle2D domain,
+		public HistogramSingleColorSection(int width, int height, int startHeight, int endHeight, Rectangle2D domain,
 				int[][] rates) {
-			super();
-			this.width = width;
-			this.height = height;
-			this.startHeight = startHeight;
-			this.endHeight = endHeight;
-			this.domain = domain;
-			this.rates = rates;
+			super(width, height, startHeight, endHeight, domain, rates);
 		}
 
 		@Override
 		public void run() {
 			for (int y = startHeight; y < endHeight; y++) {
+				if(this.interrupted) {
+					return;
+				}
 				for (int x = 0; x < width; x++) {
 					Complex c = MandelbrotUtils.pixelToComplex(x, y, width, height, domain);
 					HistogramSingleColor.this.escape(c, x, y, rates);

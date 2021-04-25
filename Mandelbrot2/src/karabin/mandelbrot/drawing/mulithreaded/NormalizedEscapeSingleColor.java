@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.commons.math3.complex.Complex;
 
 import karabin.mandelbrot.drawing.DrawingMethod;
+import karabin.mandelbrot.drawing.mulithreaded.renderingsection.RenderingSection;
 import karabin.mandelbrot.utils.MandelbrotUtils;
 
 public class NormalizedEscapeSingleColor extends DrawingMethod {
@@ -22,11 +23,11 @@ public class NormalizedEscapeSingleColor extends DrawingMethod {
 		final List<Thread> threads = new ArrayList<>();
 		final int width = image.getWidth();
 		final int height = image.getHeight();
-
+		final int [][] rates = new int[width][height];
+		
 		for (int i = 0; i < processors; i++) {
-			RenderingSection section = new RenderingSection(width, height, i * height / processors,
-					(i + 1) * height / processors, domain, image);
-			Thread thread = new Thread(section);
+			Thread thread = new NormalizedEscapeSingleColorRenderingSection(width, height, i * height / processors,
+					(i + 1) * height / processors, domain, rates);
 			threads.add(thread);
 			thread.start();
 		}
@@ -38,36 +39,32 @@ public class NormalizedEscapeSingleColor extends DrawingMethod {
 				e.printStackTrace();
 			}
 		}
+		
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				image.setRGB(x, y, rates[x][y]);
+			}
+		}
 	}
 
-	class RenderingSection implements Runnable {
-		private int width;
-		private int height;
-		private int startHeight;
-		private int endHeight;
-		private Rectangle2D domain;
-		private BufferedImage image;
+	class NormalizedEscapeSingleColorRenderingSection extends RenderingSection {
 
-		public RenderingSection(int width, int height, int startHeight, int endHeight, Rectangle2D domain,
-				BufferedImage image) {
-			super();
-			this.width = width;
-			this.height = height;
-			this.startHeight = startHeight;
-			this.endHeight = endHeight;
-			this.domain = domain;
-			this.image = image;
+		public NormalizedEscapeSingleColorRenderingSection(int width, int height, int startHeight, int endHeight,
+				Rectangle2D domain, int[][] rates) {
+			super(width, height, startHeight, endHeight, domain, rates);
 		}
 
 		@Override
 		public void run() {
-
 			for (int y = startHeight; y < endHeight; y++) {
+				if(this.interrupted) {
+					return;
+				}
 				for (int x = 0; x < width; x++) {
 					Complex c = MandelbrotUtils.pixelToComplex(x, y, width, height, domain);
 					double rate = NormalizedEscapeSingleColor.this.normalizedEscape(c);
 					int rgb = NormalizedEscapeSingleColor.this.color(rate);
-					image.setRGB(x, y, rgb);
+					rates[x][y] = rgb;
 				}
 			}
 		}

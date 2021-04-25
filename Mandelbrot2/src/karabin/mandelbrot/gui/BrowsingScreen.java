@@ -21,16 +21,14 @@ public class BrowsingScreen extends JFrame {
 	private JPanel controlsPanel;
 
 	public BrowsingScreen(int width, int height) {
-		DrawingMethod method = new HistogramSingleColor(0xff, 4, Color.red);//new DistanceEstimator(0xff, 4, Color.red);
-
-		imagePanel = new ImagePanel(width, height, method);
+		imagePanel = new ImagePanel(width, height);
 		
 		ZoomMouseListener listener = new ZoomMouseListener(imagePanel, width, height);
 		imagePanel.addMouseWheelListener(listener);
 		imagePanel.addMouseListener(listener);
 		imagePanel.addMouseMotionListener(listener);
 
-		controlsPanel = new ControlsPanel(width, 40, method, imagePanel);
+		controlsPanel = new ControlsPanel(width, 40, imagePanel);
 
 //		imagePanel.setPreferredSize(new Dimension(width, height));
 //		controlsPanel.setPreferredSize(new Dimension(200, height));

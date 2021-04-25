@@ -8,12 +8,12 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 import javax.swing.JPanel;
 
+import karabin.mandelbrot.DrawingManager;
 import karabin.mandelbrot.drawing.DrawingMethodIF;
 
 public class ImagePanel extends JPanel {
 	private static final long serialVersionUID = -8485184329163899100L;
 	
-	private DrawingMethodIF method;
 	private BufferedImage image;
 	private Rectangle2D domain = new Rectangle2D.Double(-2.5, -1, 3.5, 2);
 	
@@ -22,15 +22,14 @@ public class ImagePanel extends JPanel {
 		
 		@Override
 		public void run() {
-			ImagePanel.this.method.draw(image, domain);
+			DrawingManager.INSTANCE.getSelected().draw(image, domain);
 			ImagePanel.this.repaint();
 		}
 	};
 
-	public ImagePanel(int width, int height, DrawingMethodIF method) {
+	public ImagePanel(int width, int height) {
 		this.image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-		this.method = method;
-		method.draw(this.image, this.domain);
+		DrawingManager.INSTANCE.getSelected().draw(image, domain);
 		
 		this.setPreferredSize(new Dimension(width, height));
 	}

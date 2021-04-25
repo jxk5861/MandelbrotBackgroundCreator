@@ -25,7 +25,9 @@ public abstract class DrawingMethod implements DrawingMethodIF {
 		if (rate == -1) {
 			return 0;
 		}
+
 		double factor = rate / this.iterations;
+		
 		return new Color((int)(factor * color.getRed()), (int) (factor * color.getGreen()), (int)(factor * color.getBlue())).getRGB();
 	}
 
