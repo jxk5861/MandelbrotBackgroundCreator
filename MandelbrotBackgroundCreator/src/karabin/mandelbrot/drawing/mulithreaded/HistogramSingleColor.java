@@ -18,6 +18,7 @@ public class HistogramSingleColor extends DrawingMethod {
 		super(iterations, max, color);
 	}
 
+	@Override
 	protected int color(double rate) {
 		return new Color((int) (rate * color.getRed()), (int) (rate * color.getGreen()), (int) (rate * color.getBlue()))
 				.getRGB();
