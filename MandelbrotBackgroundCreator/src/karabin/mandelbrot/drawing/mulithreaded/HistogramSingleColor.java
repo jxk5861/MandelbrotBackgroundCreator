@@ -24,7 +24,7 @@ public abstract class HistogramSingleColor extends DrawingMethod {
 				.getRGB();
 	}
 
-	protected abstract double escape(Complex c, int x, int y);
+	protected abstract double escape(Complex c);
 	
 	@Override
 	public void draw(BufferedImage image, Rectangle2D domain) {
@@ -94,7 +94,7 @@ public abstract class HistogramSingleColor extends DrawingMethod {
 				}
 				for (int x = 0; x < width; x++) {
 					Complex c = FractalUtils.pixelToComplex(x, y, width, height, domain);
-					rates[x][y] = (int) HistogramSingleColor.this.escape(c, x, y);
+					rates[x][y] = (int) HistogramSingleColor.this.escape(c);
 				}
 			}
 		}

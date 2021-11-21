@@ -13,7 +13,7 @@ public class MandelbrotHistogramSingleColor extends HistogramSingleColor {
 	}
 
 	@Override
-	protected double escape(Complex c, int x, int y) {
+	protected double escape(Complex c) {
 		double real = 0;
 		double image = 0;
 
