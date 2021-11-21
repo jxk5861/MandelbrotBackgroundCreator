@@ -137,7 +137,8 @@ public class ControlsPanel extends JPanel {
 				if(ControlsPanel.this.file == null) {
 					JFileChooser chooser = new JFileChooser();
 					chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-					chooser.showSaveDialog(ControlsPanel.this.panel);
+					// must open due to bug in apple implementation...
+					chooser.showOpenDialog(ControlsPanel.this.panel);
 					ControlsPanel.this.file = chooser.getSelectedFile();
 					
 					if(ControlsPanel.this.file == null) {

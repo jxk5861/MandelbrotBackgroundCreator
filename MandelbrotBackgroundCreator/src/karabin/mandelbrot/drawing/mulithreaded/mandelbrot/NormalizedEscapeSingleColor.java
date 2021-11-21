@@ -1,4 +1,4 @@
-package karabin.mandelbrot.drawing.mulithreaded;
+package karabin.mandelbrot.drawing.mulithreaded.mandelbrot;
 
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
@@ -87,6 +87,5 @@ public class NormalizedEscapeSingleColor extends DrawingMethod {
 				}
 			}
 		}
-
 	}
 }

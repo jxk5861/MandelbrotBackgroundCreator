@@ -21,7 +21,7 @@ public enum ImagePrinter {
 	public void printToPNG(File file, int width, int height, Rectangle2D domain) {
 		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		DrawingManager.INSTANCE.getSelected().draw(image, domain);
-
+		
 		int id = 1;
 		for (File f : file.listFiles()) {
 			if (f.getName().matches("Mandelbrot\\d+.png")) {
@@ -39,7 +39,7 @@ public enum ImagePrinter {
 		try {
 			ImageIO.write(image, "png", output);
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 	}
 }

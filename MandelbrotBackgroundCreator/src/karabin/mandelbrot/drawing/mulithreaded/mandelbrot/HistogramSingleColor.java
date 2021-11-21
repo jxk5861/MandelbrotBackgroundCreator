@@ -1,4 +1,4 @@
-package karabin.mandelbrot.drawing.mulithreaded;
+package karabin.mandelbrot.drawing.mulithreaded.mandelbrot;
 
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
@@ -37,7 +37,7 @@ public class HistogramSingleColor extends DrawingMethod {
 				return;
 			}
 			double real2 = s1 - s2 + c.getReal();
-			double image2 = 2 * real * image + c.getImaginary();
+			double image2 = 2 * Math.abs(real) * Math.abs(image) + c.getImaginary();
 			real = real2;
 			image = image2;
 		}
