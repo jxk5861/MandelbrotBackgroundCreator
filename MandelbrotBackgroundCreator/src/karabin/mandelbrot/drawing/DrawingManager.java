@@ -14,7 +14,7 @@ public enum DrawingManager {
 	private List<DrawingMethod> methods;
 	
 	private DrawingManager() {
-		methods = new ArrayList<DrawingMethod>();
+		methods = new ArrayList<>();
 		methods.add(new HistogramSingleColor(0xff, 4, Color.red));
 		methods.add(new NormalizedEscapeSingleColor(0xff, 4, Color.red));
 		selected = methods.get(0);
