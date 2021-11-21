@@ -156,9 +156,9 @@ public class ControlsPanel extends JPanel {
 		});
 		
 		
-		DefaultListModel<DrawingMethod> model = new DefaultListModel<DrawingMethod>();
+		DefaultListModel<DrawingMethod> model = new DefaultListModel<>();
 		model.addAll(DrawingManager.INSTANCE.getDrawingMethods());
-		list = new JList<DrawingMethod>(model);
+		list = new JList<>(model);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setSelectedIndex(0);
 		list.addListSelectionListener(new ListSelectionListener() {
