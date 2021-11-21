@@ -110,7 +110,7 @@ public class ControlsPanel extends JPanel {
 				try {
 					int iterations = Integer.parseInt(iterationsField.getText());
 					if(iterations <= 0) {
-						throw new NumberFormatException("For input string \"%s\"".formatted(iterationsField.getText()));
+						throw new NumberFormatException(String.format("For input string \"%s\"", iterationsField.getText()));
 					}
 					DrawingManager.INSTANCE.getSelected().setIterations(iterations);
 					ControlsPanel.this.panel.draw();

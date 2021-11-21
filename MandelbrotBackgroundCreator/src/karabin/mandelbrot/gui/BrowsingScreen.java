@@ -23,7 +23,7 @@ public class BrowsingScreen extends JFrame {
 		imagePanel.addMouseListener(listener);
 		imagePanel.addMouseMotionListener(listener);
 
-		controlsPanel = new ControlsPanel(width, 40, imagePanel);
+		controlsPanel = new ControlsPanel(width, 60, imagePanel);
 
 //		imagePanel.setPreferredSize(new Dimension(width, height));
 //		controlsPanel.setPreferredSize(new Dimension(200, height));

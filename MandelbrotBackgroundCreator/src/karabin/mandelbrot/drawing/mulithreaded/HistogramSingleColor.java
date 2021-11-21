@@ -1,4 +1,4 @@
-package karabin.mandelbrot.drawing.mulithreaded.mandelbrot;
+package karabin.mandelbrot.drawing.mulithreaded;
 
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
@@ -12,7 +12,7 @@ import karabin.mandelbrot.drawing.DrawingMethod;
 import karabin.mandelbrot.drawing.mulithreaded.renderingsection.RenderingSection;
 import karabin.mandelbrot.utils.FractalUtils;
 
-public class HistogramSingleColor extends DrawingMethod {
+public abstract class HistogramSingleColor extends DrawingMethod {
 
 	public HistogramSingleColor(int iterations, int max, Color color) {
 		super(iterations, max, color);
@@ -24,27 +24,8 @@ public class HistogramSingleColor extends DrawingMethod {
 				.getRGB();
 	}
 
-	private void escape(Complex c, int x, int y, int[][] rates) {
-		double real = 0;
-		double image = 0;
-
-		for (int i = 0; i < iterations; i++) {
-			double s1 = real * real;
-			double s2 = image * image;
-			if (s1 + s2 > max) {
-				rates[x][y] = i;
-//				normalizedRates[x][y] = i + 1 - Math.log10(Math.log(s1 + s2) / Math.log(2));
-				return;
-			}
-			double real2 = s1 - s2 + c.getReal();
-			double image2 = 2 * Math.abs(real) * Math.abs(image) + c.getImaginary();
-			real = real2;
-			image = image2;
-		}
-
-		rates[x][y] = -1;
-	}
-
+	protected abstract double escape(Complex c, int x, int y);
+	
 	@Override
 	public void draw(BufferedImage image, Rectangle2D domain) {
 		final int processors = Runtime.getRuntime().availableProcessors();
@@ -108,12 +89,12 @@ public class HistogramSingleColor extends DrawingMethod {
 		@Override
 		public void run() {
 			for (int y = startHeight; y < endHeight; y++) {
-				if(this.interrupted) {
+				if (this.interrupted) {
 					return;
 				}
 				for (int x = 0; x < width; x++) {
 					Complex c = FractalUtils.pixelToComplex(x, y, width, height, domain);
-					HistogramSingleColor.this.escape(c, x, y, rates);
+					rates[x][y] = (int) HistogramSingleColor.this.escape(c, x, y);
 				}
 			}
 		}
