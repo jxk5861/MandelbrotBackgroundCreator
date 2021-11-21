@@ -10,7 +10,7 @@ import org.apache.commons.math3.complex.Complex;
 
 import karabin.mandelbrot.drawing.DrawingMethod;
 import karabin.mandelbrot.drawing.mulithreaded.renderingsection.RenderingSection;
-import karabin.mandelbrot.utils.MandelbrotUtils;
+import karabin.mandelbrot.utils.FractalUtils;
 
 public class HistogramSingleColor extends DrawingMethod {
 
@@ -112,7 +112,7 @@ public class HistogramSingleColor extends DrawingMethod {
 					return;
 				}
 				for (int x = 0; x < width; x++) {
-					Complex c = MandelbrotUtils.pixelToComplex(x, y, width, height, domain);
+					Complex c = FractalUtils.pixelToComplex(x, y, width, height, domain);
 					HistogramSingleColor.this.escape(c, x, y, rates);
 				}
 			}

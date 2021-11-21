@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 import org.apache.commons.math3.complex.Complex;
 
-import karabin.mandelbrot.utils.MandelbrotUtils;
+import karabin.mandelbrot.utils.FractalUtils;
 
 public class DistanceEstimator extends DrawingMethod{
 
@@ -25,7 +25,7 @@ public class DistanceEstimator extends DrawingMethod{
  
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				Complex c = MandelbrotUtils.pixelToComplex(x, y, width, height, domain);
+				Complex c = FractalUtils.pixelToComplex(x, y, width, height, domain);
 				
 			}
 		}

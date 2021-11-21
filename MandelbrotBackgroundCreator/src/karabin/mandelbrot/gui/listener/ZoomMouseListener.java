@@ -13,7 +13,7 @@ import java.awt.geom.Rectangle2D;
 import org.apache.commons.math3.complex.Complex;
 
 import karabin.mandelbrot.gui.panels.ImagePanel;
-import karabin.mandelbrot.utils.MandelbrotUtils;
+import karabin.mandelbrot.utils.FractalUtils;
 
 public class ZoomMouseListener implements MouseWheelListener, MouseListener, MouseMotionListener {
 
@@ -39,7 +39,7 @@ public class ZoomMouseListener implements MouseWheelListener, MouseListener, Mou
 
 		AffineTransform tr2 = new AffineTransform();
 		double zoom = 1 + .1 * Math.abs(e.getPreciseWheelRotation());
-		Complex c = MandelbrotUtils.pixelToComplex(e.getPoint().getX(), e.getPoint().getY(), width, height, domain);
+		Complex c = FractalUtils.pixelToComplex(e.getPoint().getX(), e.getPoint().getY(), width, height, domain);
 		tr2.translate(c.getReal(), c.getImaginary());
 		tr2.scale(zoom, zoom);
 		tr2.translate(-c.getReal(), -c.getImaginary());
@@ -117,8 +117,8 @@ public class ZoomMouseListener implements MouseWheelListener, MouseListener, Mou
 	}
 
 	private void reDraw(int x, int y) {
-		Complex start = MandelbrotUtils.pixelToComplex(this.x, this.y, width, height, panel.getDomain());
-		Complex end = MandelbrotUtils.pixelToComplex(x, y, width, height, panel.getDomain());
+		Complex start = FractalUtils.pixelToComplex(this.x, this.y, width, height, panel.getDomain());
+		Complex end = FractalUtils.pixelToComplex(x, y, width, height, panel.getDomain());
 		Complex offset = start.subtract(end);
 		Rectangle2D domain = panel.getDomain();
 

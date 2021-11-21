@@ -10,7 +10,7 @@ import org.apache.commons.math3.complex.Complex;
 
 import karabin.mandelbrot.drawing.DrawingMethod;
 import karabin.mandelbrot.drawing.mulithreaded.renderingsection.RenderingSection;
-import karabin.mandelbrot.utils.MandelbrotUtils;
+import karabin.mandelbrot.utils.FractalUtils;
 
 public class NormalizedEscapeSingleColor extends DrawingMethod {
 	public NormalizedEscapeSingleColor(int iterations, int max, Color color) {
@@ -80,7 +80,7 @@ public class NormalizedEscapeSingleColor extends DrawingMethod {
 					return;
 				}
 				for (int x = 0; x < width; x++) {
-					Complex c = MandelbrotUtils.pixelToComplex(x, y, width, height, domain);
+					Complex c = FractalUtils.pixelToComplex(x, y, width, height, domain);
 					double rate = NormalizedEscapeSingleColor.this.normalizedEscape(c);
 					int rgb = NormalizedEscapeSingleColor.this.color(rate);
 					rates[x][y] = rgb;
