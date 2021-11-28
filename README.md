@@ -16,4 +16,4 @@ Once a cool looking region is found, it can be exported as an image and used as 
 <img src="sample_images/generated/Mandelbrot8.png" alt="drawing" width="600"/>
 <img src="sample_images/generated/Mandelbrot9.png" alt="drawing" width="600"/>
 <img src="sample_images/generated/Mandelbrot10.png" alt="drawing" width="600"/>
-<img src="sample_images/generated/BurningShip1.png" alt="drawing" width="800"/>
+<img src="sample_images/generated/BurningShip2.png" alt="drawing" width="600"/>
