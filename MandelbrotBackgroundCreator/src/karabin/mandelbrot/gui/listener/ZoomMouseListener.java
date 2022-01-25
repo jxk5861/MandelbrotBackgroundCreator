@@ -21,6 +21,8 @@ public class ZoomMouseListener implements MouseWheelListener, MouseListener, Mou
 	private int width;
 	private int height;
 
+	
+	private boolean panning;
 	private int x;
 	private int y;
 	private double rx;
@@ -31,10 +33,21 @@ public class ZoomMouseListener implements MouseWheelListener, MouseListener, Mou
 		this.panel = panel;
 		this.width = width;
 		this.height = height;
+		
+		this.panning = false;
+		
+		this.x = 0;
+		this.y = 0;
+		this.rx = 0;
+		this.ry = 0;
 	}
 
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
+		if(panning) {
+			return;
+		}
+		
 		Rectangle2D domain = panel.getDomain();
 
 		AffineTransform tr2 = new AffineTransform();
@@ -84,6 +97,8 @@ public class ZoomMouseListener implements MouseWheelListener, MouseListener, Mou
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		this.panning = true;
+		
 		this.x = e.getX();
 		this.y = e.getY();
 		
@@ -94,6 +109,7 @@ public class ZoomMouseListener implements MouseWheelListener, MouseListener, Mou
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		this.reDraw(e.getX(), e.getY());
+		this.panning = false;
 	}
 
 	@Override
