@@ -24,6 +24,9 @@ To change a selectors color, double click on it or select it and press the color
 <img src="sample_images/gradients/Fractal11.png" alt="drawing" width="600"/>
 <img src="sample_images/gradients/Fractal3.png" alt="drawing" width="600"/>
 <img src="sample_images/gradients/Fractal13.png" alt="drawing" width="600"/>
+<img src="sample_images/gradients/Fractal22.png" alt="drawing" width="600"/>
+<img src="sample_images/gradients/Fractal23.png" alt="drawing" width="600"/>
+<img src="sample_images/gradients/Fractal24.png" alt="drawing" width="600"/>
 
 <!-- <img src="sample_images/generated/Mandelbrot6.png" alt="drawing" width="600"/> -->
 <img src="sample_images/generated/Mandelbrot7.png" alt="drawing" width="600"/>
