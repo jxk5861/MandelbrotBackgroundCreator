@@ -194,6 +194,7 @@ public class ControlsPanel extends JPanel {
 				if (ControlsPanel.this.gradientMap.containsKey(selected)) {
 					ColorGradient gradient = ControlsPanel.this.gradientMap.get(selected);
 					ControlsPanel.this.gradientCreator.setGradient(gradient);
+					ControlsPanel.this.gradientCreator.setSelected(-1);
 					ControlsPanel.this.gradientCreator.repaint();
 				}
 
