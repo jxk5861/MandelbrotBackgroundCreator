@@ -1,5 +1,5 @@
 # Mandelbrot
-A program written in Java to allow zooming and panning around the Mandelbrot set. 
+A program written in Java to allow zooming and panning around the Mandelbrot/Burning Ship fractals. 
 It includes multiple different types of coloring algorithms and customizable color. 
 Once a cool looking region is found, it can be exported as an image and used as a desktop background.
 
