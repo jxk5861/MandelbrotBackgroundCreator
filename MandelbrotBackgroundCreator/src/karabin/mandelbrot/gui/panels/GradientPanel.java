@@ -21,10 +21,10 @@ import karabin.mandelbrot.drawing.coloring.ColorGradient;
 import karabin.mandelbrot.drawing.coloring.ColorStrategy;
 import karabin.mandelbrot.drawing.coloring.MapMultiColorStrategy;
 
-public class GradientCreator extends JComponent {
+public class GradientPanel extends JComponent {
 
 	private static final int MARGIN = 5;
-	private static final int WIDTH = 100;
+	private static final int WIDTH = 150;
 	private static final int HEIGHT = 20;
 
 	private ColorGradient gradient;
@@ -41,7 +41,7 @@ public class GradientCreator extends JComponent {
 		repaint();
 	}
 
-	public GradientCreator(JPanel chooseColor, ImagePanel panel, ColorGradient gradient) {
+	public GradientPanel(JPanel chooseColor, ImagePanel panel, ColorGradient gradient) {
 		this.panel = panel;
 
 		Dimension dim = new Dimension(WIDTH + 2 * MARGIN, HEIGHT);
@@ -58,9 +58,9 @@ public class GradientCreator extends JComponent {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				GradientCreator.this.pressed = false;
+				GradientPanel.this.pressed = false;
 
-				GradientCreator.this.redraw();
+				GradientPanel.this.redraw();
 			}
 
 			@Override
@@ -68,23 +68,23 @@ public class GradientCreator extends JComponent {
 				if (e.getButton() != MouseEvent.BUTTON1) {
 					return;
 				}
-				GradientCreator.this.pressed = true;
+				GradientPanel.this.pressed = true;
 				selected = -1;
 
 				final int width = 3;
-				for (int i = 0; i < GradientCreator.this.gradient.size(); i++) {
-					double x = GradientCreator.this.gradient.getPositions().get(i);
-					int ix = (int) ((GradientCreator.this.getWidth() - 2 * width) * x) + width;
+				for (int i = 0; i < GradientPanel.this.gradient.size(); i++) {
+					double x = GradientPanel.this.gradient.getPositions().get(i);
+					int ix = (int) ((GradientPanel.this.getWidth() - 2 * width) * x) + width;
 
 					if (e.getX() > ix - width && e.getX() < ix + width) {
 						if (selected == i) {
 							selected = -1;
 						} else {
 							selected = i;
-							chooseColor.setBackground(GradientCreator.this.gradient.getColors().get(i));
-							GradientCreator.this.setSelectedColor(GradientCreator.this.gradient.getColors().get(i));
-							GradientCreator.this.repaint();
-							GradientCreator.this.requestFocus();
+							chooseColor.setBackground(GradientPanel.this.gradient.getColors().get(i));
+							GradientPanel.this.setSelectedColor(GradientPanel.this.gradient.getColors().get(i));
+							GradientPanel.this.repaint();
+							GradientPanel.this.requestFocus();
 						}
 						repaint();
 						break;
@@ -114,25 +114,26 @@ public class GradientCreator extends JComponent {
 
 						Color color = JColorChooser.showDialog(null, "Choose a color", Color.WHITE);
 						if (color == null) {
-							color = Color.WHITE;
+							return;
 						}
 
-						GradientCreator.this.gradient.add(v, color);
-						selected = GradientCreator.this.gradient.getColors().size() - 1;
+						GradientPanel.this.gradient.add(v, color);
+						selected = GradientPanel.this.gradient.getColors().size() - 1;
 						chooseColor.setBackground(color);
-						GradientCreator.this.setSelectedColor(color);
-						GradientCreator.this.requestFocus();
-						GradientCreator.this.redraw();
+						GradientPanel.this.setSelectedColor(color);
+						GradientPanel.this.requestFocus();
+						GradientPanel.this.redraw();
 					} else {
-						Color color = JColorChooser.showDialog(null, "Choose a color", Color.WHITE);
+						var old = GradientPanel.this.gradient.getColors().get(selected);
+						Color color = JColorChooser.showDialog(null, "Choose a color", old);
 						if (color == null) {
-							color = Color.WHITE;
+							return;
 						}
-						GradientCreator.this.gradient.getColors().set(selected, color);
-						chooseColor.setBackground(GradientCreator.this.gradient.getColors().get(selected));
-						GradientCreator.this.setSelectedColor(GradientCreator.this.gradient.getColors().get(selected));
-						GradientCreator.this.requestFocus();
-						GradientCreator.this.redraw();
+						GradientPanel.this.gradient.getColors().set(selected, color);
+						chooseColor.setBackground(GradientPanel.this.gradient.getColors().get(selected));
+						GradientPanel.this.setSelectedColor(GradientPanel.this.gradient.getColors().get(selected));
+						GradientPanel.this.requestFocus();
+						GradientPanel.this.redraw();
 					}
 				}
 			}
@@ -157,9 +158,9 @@ public class GradientCreator extends JComponent {
 					double v = (double) (e.getX() - MARGIN) / (getWidth() - 2 * MARGIN);
 					v = Math.max(0, v);
 					v = Math.min(1, v);
-					GradientCreator.this.gradient.getPositions().set(selected, v);
+					GradientPanel.this.gradient.getPositions().set(selected, v);
 
-					GradientCreator.this.redraw();
+					GradientPanel.this.redraw();
 				}
 			}
 		});
@@ -173,14 +174,14 @@ public class GradientCreator extends JComponent {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE || e.getKeyCode() == KeyEvent.VK_DELETE) {
-					if (selected == -1 || GradientCreator.this.gradient.size() == 1) {
+					if (selected == -1 || GradientPanel.this.gradient.size() == 1) {
 						return;
 					}
 
-					GradientCreator.this.gradient.remove(selected);
+					GradientPanel.this.gradient.remove(selected);
 					selected = -1;
 
-					GradientCreator.this.redraw();
+					GradientPanel.this.redraw();
 				}
 			}
 
@@ -199,7 +200,7 @@ public class GradientCreator extends JComponent {
 	@Override
 	protected void paintComponent(Graphics g) {
 		Graphics2D g2d = (Graphics2D) g;
-		BufferedImage image = new BufferedImage(GradientCreator.this.getWidth(), GradientCreator.this.getHeight(),
+		BufferedImage image = new BufferedImage(GradientPanel.this.getWidth(), GradientPanel.this.getHeight(),
 				BufferedImage.TYPE_INT_RGB);
 		Graphics2D g2d2 = image.createGraphics();
 		var unique = this.gradient.unique();

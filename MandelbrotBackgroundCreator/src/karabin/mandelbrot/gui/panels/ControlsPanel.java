@@ -38,7 +38,7 @@ public class ControlsPanel extends JPanel {
 
 	private ImagePanel panel;
 
-	private GradientCreator gradientCreator;
+	private GradientPanel gradientCreator;
 	private JPanel chooseColor;
 	private JLabel iterationsLabel;
 	private JTextField iterationsField;
@@ -140,7 +140,7 @@ public class ControlsPanel extends JPanel {
 					ControlsPanel.this.panel.draw();
 					ControlsPanel.this.iterationsField.setForeground(Color.black);
 				} catch (NumberFormatException ee) {
-					ee.printStackTrace();
+//					ee.printStackTrace();
 					ControlsPanel.this.iterationsField.setForeground(Color.red);
 				}
 			}
@@ -204,7 +204,7 @@ public class ControlsPanel extends JPanel {
 			}
 		});
 
-		this.gradientCreator = new GradientCreator(chooseColor, panel, gradientMap.get(drawingMethods.get(0)));
+		this.gradientCreator = new GradientPanel(chooseColor, panel, gradientMap.get(drawingMethods.get(0)));
 		
 		this.add(gradientCreator);
 		this.add(chooseColor);

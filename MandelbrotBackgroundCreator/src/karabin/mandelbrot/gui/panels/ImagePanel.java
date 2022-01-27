@@ -9,6 +9,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import javax.swing.JPanel;
 
 import karabin.mandelbrot.drawing.DrawingManager;
+import karabin.mandelbrot.gui.listener.ZoomMouseListener;
 
 public class ImagePanel extends JPanel {
 	private static final long serialVersionUID = -8485184329163899100L;
@@ -30,7 +31,14 @@ public class ImagePanel extends JPanel {
 		this.image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		DrawingManager.INSTANCE.getSelected().draw(image, domain);
 		
+		ZoomMouseListener listener = new ZoomMouseListener(this, width, height);
+		this.addMouseWheelListener(listener);
+		this.addMouseListener(listener);
+		this.addMouseMotionListener(listener);
+		this.addKeyListener(listener);
+		
 		this.setPreferredSize(new Dimension(width, height));
+		this.setFocusable(true);
 	}
 
 	@Override

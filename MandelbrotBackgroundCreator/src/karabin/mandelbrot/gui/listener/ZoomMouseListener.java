@@ -1,5 +1,7 @@
 package karabin.mandelbrot.gui.listener;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -15,13 +17,14 @@ import org.apache.commons.math3.complex.Complex;
 import karabin.mandelbrot.gui.panels.ImagePanel;
 import karabin.mandelbrot.utils.FractalUtils;
 
-public class ZoomMouseListener implements MouseWheelListener, MouseListener, MouseMotionListener {
+public class ZoomMouseListener implements MouseWheelListener, MouseListener, MouseMotionListener, KeyListener {
 
 	private ImagePanel panel;
 	private int width;
 	private int height;
 
 	
+	private boolean fast;
 	private boolean panning;
 	private int x;
 	private int y;
@@ -48,16 +51,22 @@ public class ZoomMouseListener implements MouseWheelListener, MouseListener, Mou
 			return;
 		}
 		
+		
+		this.panel.requestFocus();
 		Rectangle2D domain = panel.getDomain();
 
 		AffineTransform tr2 = new AffineTransform();
-		double zoom = 1 + .1 * Math.abs(e.getPreciseWheelRotation());
+		double rotation = e.getPreciseWheelRotation();
+		if(this.fast) {
+			rotation *= 3;
+		}
+		double zoom = 1 + .1 * Math.abs(rotation);
 		Complex c = FractalUtils.pixelToComplex(e.getPoint().getX(), e.getPoint().getY(), width, height, domain);
 		tr2.translate(c.getReal(), c.getImaginary());
 		tr2.scale(zoom, zoom);
 		tr2.translate(-c.getReal(), -c.getImaginary());
 
-		if (e.getPreciseWheelRotation() > 0) {
+		if (rotation > 0) {
 			Point2D l = new Point2D.Double(domain.getX(), domain.getY());
 			Point2D r = new Point2D.Double(domain.getMaxX(), domain.getMaxY());
 
@@ -136,10 +145,33 @@ public class ZoomMouseListener implements MouseWheelListener, MouseListener, Mou
 		Complex start = FractalUtils.pixelToComplex(this.x, this.y, width, height, panel.getDomain());
 		Complex end = FractalUtils.pixelToComplex(x, y, width, height, panel.getDomain());
 		Complex offset = start.subtract(end);
+		if(this.fast) {
+			offset = offset.multiply(1.5);
+		}
+		
+		
 		Rectangle2D domain = panel.getDomain();
 
 		domain.setRect(rx + offset.getReal(),ry + offset.getImaginary(), domain.getWidth(), domain.getHeight());
 
 		panel.draw();
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() == KeyEvent.VK_CONTROL)  {
+			this.fast = true;
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		if(e.getKeyCode() == KeyEvent.VK_CONTROL) {
+			this.fast = false;
+		}
 	}
 }
