@@ -24,7 +24,7 @@ public enum ImagePrinter {
 		
 		int id = 1;
 		for (File f : file.listFiles()) {
-			if (f.getName().matches("Mandelbrot\\d+.png")) {
+			if (f.getName().matches("Fractal\\d+.png")) {
 				Pattern pattern = Pattern.compile("\\d+");
 				Matcher matcher = pattern.matcher(f.getName());
 
@@ -35,7 +35,7 @@ public enum ImagePrinter {
 			}
 		}
 
-		File output = new File(file, String.format("Mandelbrot%d.png", id));
+		File output = new File(file, String.format("Fractal%d.png", id));
 		try {
 			ImageIO.write(image, "png", output);
 		} catch (IOException e) {
