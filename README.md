@@ -4,7 +4,7 @@ It includes multiple different types of coloring algorithms and customizable col
 Once a cool looking region is found, it can be exported as an image and used as a desktop background.
 
 ### Usage
-Click and drag to pan around the fractal image. Use the mouse wheel to scroll in and out. To manager the color gradient, click and drag on one of the selectors (image below).
+Click and drag to pan around the fractal image. Use the mouse wheel to scroll in and out. To manager the color gradient, click and drag on one of the selectors to move it (image below).
 
 <img src="sample_images/tutorial/Color Gradient.png" alt="drawing" width="200"/>
 
