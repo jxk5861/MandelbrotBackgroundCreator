@@ -18,22 +18,17 @@ public abstract class HistogramSingleColor extends DrawingMethod {
 		super(iterations, max, color);
 	}
 
-	@Override
-	protected int color(double rate) {
-		return new Color((int) (rate * color.getRed()), (int) (rate * color.getGreen()), (int) (rate * color.getBlue()))
-				.getRGB();
-	}
-
 	protected abstract double escape(Complex c);
-	
+
 	@Override
 	public void draw(BufferedImage image, Rectangle2D domain) {
 		final int processors = Runtime.getRuntime().availableProcessors();
-		final List<Thread> threads = new ArrayList<>();
+		final List<Thread> threads = new ArrayList<>(processors);
 		final int width = image.getWidth();
 		final int height = image.getHeight();
+		domain = (Rectangle2D) domain.clone();
 
-		int[][] rates = new int[width][height];
+		final int[][] rates = new int[width][height];
 
 		// Make this into a new interruptable thread?
 		for (int i = 0; i < processors; i++) {

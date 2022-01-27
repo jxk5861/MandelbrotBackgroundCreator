@@ -2,36 +2,25 @@ package karabin.mandelbrot.drawing;
 
 import java.awt.Color;
 
+import karabin.mandelbrot.drawing.coloring.ColorStrategy;
+import karabin.mandelbrot.drawing.coloring.MapSingleColorStrategy;
+
 public abstract class DrawingMethod implements DrawingMethodIF {
 
 	protected int iterations;
 	protected int max;
-	protected Color color;
+	// To avoid concurrent modification, set the reference of this to a new value.
+	private ColorStrategy coloring;
 
 	public DrawingMethod(int iterations, int max, Color color) {
 		super();
 		this.iterations = iterations;
 		this.max = max;
-		this.color = color;
+		this.coloring = new MapSingleColorStrategy(color);
 	}
 
 	protected int color(double rate) {
-		if (rate == -1) {
-			return 0;
-		}
-
-		
-		double factor = rate / this.iterations;
-		
-		// normalized escape with mods and alternating color
-//		Color color = this.color;
-//		if((int)(rate / 255) % 2 == 1) {
-//			color = new Color(255, 255, 100);
-//		}
-//		double factor = (rate % 255) / 255;
-
-		
-		return new Color((int)(factor * color.getRed()), (int) (factor * color.getGreen()), (int)(factor * color.getBlue())).getRGB();
+		return coloring.color(rate).getRGB();
 	}
 
 	public int getIterations() {
@@ -50,14 +39,14 @@ public abstract class DrawingMethod implements DrawingMethodIF {
 		this.max = max;
 	}
 
-	public Color getColor() {
-		return color;
+	public ColorStrategy getColoring() {
+		return coloring;
 	}
 
-	public void setColor(Color color) {
-		this.color = color;
+	public void setColoring(ColorStrategy coloring) {
+		this.coloring = coloring;
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.getClass().getSimpleName();

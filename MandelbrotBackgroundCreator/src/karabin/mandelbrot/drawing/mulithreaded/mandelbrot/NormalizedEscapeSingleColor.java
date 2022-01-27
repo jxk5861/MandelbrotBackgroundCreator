@@ -16,7 +16,7 @@ public class NormalizedEscapeSingleColor extends DrawingMethod {
 	public NormalizedEscapeSingleColor(int iterations, int max, Color color) {
 		super(iterations, max, color);
 	}
-	
+
 	protected double normalizedEscape(Complex c) {
 		double real = 0;
 		double image = 0;
@@ -33,17 +33,19 @@ public class NormalizedEscapeSingleColor extends DrawingMethod {
 			image = image2;
 		}
 
-		return -1;
+		return 0;
 	}
 
 	@Override
 	public void draw(BufferedImage image, Rectangle2D domain) {
 		final int processors = Runtime.getRuntime().availableProcessors();
-		final List<Thread> threads = new ArrayList<>();
+		final List<Thread> threads = new ArrayList<>(processors);
 		final int width = image.getWidth();
 		final int height = image.getHeight();
-		final int [][] rates = new int[width][height];
+		domain = (Rectangle2D) domain.clone();
 		
+		final int[][] rates = new int[width][height];
+
 		for (int i = 0; i < processors; i++) {
 			Thread thread = new NormalizedEscapeSingleColorRenderingSection(width, height, i * height / processors,
 					(i + 1) * height / processors, domain, rates);
@@ -58,10 +60,12 @@ public class NormalizedEscapeSingleColor extends DrawingMethod {
 				e.printStackTrace();
 			}
 		}
-		
+
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				image.setRGB(x, y, rates[x][y]);
+				int iteration = rates[x][y];
+				double hue = (double) iteration / NormalizedEscapeSingleColor.this.iterations;
+				image.setRGB(x, y, this.color(hue));
 			}
 		}
 	}
@@ -76,14 +80,12 @@ public class NormalizedEscapeSingleColor extends DrawingMethod {
 		@Override
 		public void run() {
 			for (int y = startHeight; y < endHeight; y++) {
-				if(this.interrupted) {
+				if (this.interrupted) {
 					return;
 				}
 				for (int x = 0; x < width; x++) {
 					Complex c = FractalUtils.pixelToComplex(x, y, width, height, domain);
-					double rate = NormalizedEscapeSingleColor.this.normalizedEscape(c);
-					int rgb = NormalizedEscapeSingleColor.this.color(rate);
-					rates[x][y] = rgb;
+					rates[x][y] = (int) NormalizedEscapeSingleColor.this.normalizedEscape(c);
 				}
 			}
 		}
