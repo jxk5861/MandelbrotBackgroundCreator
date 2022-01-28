@@ -25,6 +25,26 @@ public enum ImagePrinter {
 		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		DrawingManager.INSTANCE.getSelected().draw(image, domain);
 
+		int id = getNextFileId(file);
+
+		// Log the fractal's domain.
+		String fractalString = String.format("Fractal%d.png", id);
+		try (PrintWriter pw = new PrintWriter(new FileOutputStream(new File(file, "Fractal Logs.txt"), true))) {
+			pw.println(fractalString + " " + domain.toString());
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		// Save the fractal to the specified folder.
+		File output = new File(file, fractalString);
+		try {
+			ImageIO.write(image, "png", output);
+		} catch (IOException e) {
+			 e.printStackTrace();
+		}
+	}
+
+	private int getNextFileId(File file) {
 		int id = 1;
 		for (File f : file.listFiles()) {
 			if (f.getName().matches("Fractal\\d+.png")) {
@@ -37,19 +57,6 @@ public enum ImagePrinter {
 
 			}
 		}
-
-		String fractalString = String.format("Fractal%d.png", id);
-		try (PrintWriter pw = new PrintWriter(new FileOutputStream(new File(file, "Fractal Logs.txt"), true))) {
-			pw.println(fractalString + " " + domain.toString());
-		} catch (FileNotFoundException e1) {
-
-		}
-
-		File output = new File(file, fractalString);
-		try {
-			ImageIO.write(image, "png", output);
-		} catch (IOException e) {
-			// e.printStackTrace();
-		}
+		return id;
 	}
 }
