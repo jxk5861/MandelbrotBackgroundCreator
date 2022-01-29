@@ -6,18 +6,12 @@ import java.awt.image.BufferedImage;
 
 import org.apache.commons.math3.complex.Complex;
 
-import com.aparapi.Range;
-
-import karabin.mandelbrot.drawing.DrawingMethod;
 import karabin.mandelbrot.drawing.gpu.kernel.FractalKernel;
 
-public abstract class HistogramGpu extends DrawingMethod {
-
-	private FractalKernel kernel;
+public abstract class HistogramGpu extends DrawingMethodGpu {
 
 	public HistogramGpu(int iterations, int max, Color color, FractalKernel kernel) {
-		super(iterations, max, color);
-		this.kernel = kernel;
+		super(iterations, max, color, kernel);
 	}
 
 	protected abstract double escape(Complex c);
@@ -26,20 +20,7 @@ public abstract class HistogramGpu extends DrawingMethod {
 	public void draw(BufferedImage image, Rectangle2D unsafeDomain) {
 		final int width = image.getWidth();
 		final int height = image.getHeight();
-		final Rectangle2D domain = (Rectangle2D) unsafeDomain.clone();
-		final int[][] rates = new int[width][height];
-
-		final int[] rates1D = new int[width * height];
-
-		kernel.set(domain, this.iterations, this.max, rates1D);
-		Range range = Range.create2D(width, height);
-		kernel.execute(range);
-
-		for (int y = 0; y < height; y++) {
-			for (int x = 0; x < width; x++) {
-				rates[x][y] = rates1D[x + width * y];
-			}
-		}
+		int [][] rates = this.computeRates(width, height, unsafeDomain);
 
 		int[] numIterationsPerPixel = new int[iterations + 1];
 		for (int y = 0; y < height; y++) {

@@ -1,9 +1,10 @@
-package karabin.mandelbrot.drawing.gpu;
+package karabin.mandelbrot.drawing.gpu.mandelbrot;
 
 import java.awt.Color;
 
 import org.apache.commons.math3.complex.Complex;
 
+import karabin.mandelbrot.drawing.gpu.HistogramGpu;
 import karabin.mandelbrot.drawing.gpu.kernel.MandelbrotKernel;
 
 public class MandelbrotHistogramGpu extends HistogramGpu {

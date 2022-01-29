@@ -4,9 +4,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import karabin.mandelbrot.drawing.gpu.BurningShipHistogramGpu;
-import karabin.mandelbrot.drawing.gpu.MandelbrotHistogramGpu;
-import karabin.mandelbrot.drawing.mulithreaded.mandelbrot.NormalizedEscapeSingleColor;
+import karabin.mandelbrot.drawing.gpu.burningship.BurningShipHistogramGpu;
+import karabin.mandelbrot.drawing.gpu.mandelbrot.MandelbrotHistogramGpu;
 
 public enum DrawingManager {
 	INSTANCE;
@@ -18,7 +17,7 @@ public enum DrawingManager {
 		methods = new ArrayList<>();
 //		methods.add(new MandelbrotHistogramSingleColor(0xff, 4, Color.red));
 		methods.add(new MandelbrotHistogramGpu(0xff, 4, Color.red));
-		methods.add(new NormalizedEscapeSingleColor(0xff, 4, Color.red));
+//		methods.add(new MandelbrotNormalizedEscapeGpu(0xff, 4, Color.red));
 
 //		methods.add(new BurningShipHistogramSingleColor(0xff, 4, Color.red));
 		methods.add(new BurningShipHistogramGpu(0xff, 4, Color.red));
