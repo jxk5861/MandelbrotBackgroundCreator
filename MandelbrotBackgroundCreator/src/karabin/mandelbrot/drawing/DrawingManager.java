@@ -15,12 +15,17 @@ public enum DrawingManager {
 	
 	private DrawingManager() {
 		methods = new ArrayList<>();
-//		methods.add(new MandelbrotHistogramSingleColor(0xff, 4, Color.red));
+		
 		methods.add(new MandelbrotHistogramGpu(0xff, 4, Color.red));
-//		methods.add(new MandelbrotNormalizedEscapeGpu(0xff, 4, Color.red));
-
-//		methods.add(new BurningShipHistogramSingleColor(0xff, 4, Color.red));
 		methods.add(new BurningShipHistogramGpu(0xff, 4, Color.red));
+		
+		
+		
+//		methods.add(new JuliaHistogramGpu(0xff, 4, Color.red));
+//		methods.add(new MandelbrotHistogramSingleColor(0xff, 4, Color.red));
+//		methods.add(new BurningShipHistogramSingleColor(0xff, 4, Color.red));
+//		methods.add(new MandelbrotNormalizedEscapeGpu(0xff, 4, Color.red));
+		
 		selected = methods.get(0);
 	}
 	
