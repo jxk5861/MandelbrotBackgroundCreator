@@ -22,9 +22,6 @@ public enum ImagePrinter {
 	}
 
 	public void printToPNG(File file, int width, int height, Rectangle2D domain) {
-		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-		DrawingManager.INSTANCE.getSelected().draw(image, domain);
-
 		int id = getNextFileId(file);
 
 		// Log the fractal's domain.
@@ -35,12 +32,15 @@ public enum ImagePrinter {
 			e.printStackTrace();
 		}
 
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		DrawingManager.INSTANCE.getSelected().draw(image, domain);
+
 		// Save the fractal to the specified folder.
 		File output = new File(file, fractalString);
 		try {
 			ImageIO.write(image, "png", output);
 		} catch (IOException e) {
-			 e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
 
