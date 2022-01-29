@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-import karabin.mandelbrot.drawing.mulithreaded.burningship.BurningShipHistogramSingleColor;
-import karabin.mandelbrot.drawing.mulithreaded.mandelbrot.MandelbrotHistogramSingleColor;
+import karabin.mandelbrot.drawing.gpu.BurningShipHistogramGpu;
+import karabin.mandelbrot.drawing.gpu.MandelbrotHistogramGpu;
 import karabin.mandelbrot.drawing.mulithreaded.mandelbrot.NormalizedEscapeSingleColor;
 
 public enum DrawingManager {
@@ -16,10 +16,12 @@ public enum DrawingManager {
 	
 	private DrawingManager() {
 		methods = new ArrayList<>();
-		methods.add(new MandelbrotHistogramSingleColor(0xff, 4, Color.red));
+//		methods.add(new MandelbrotHistogramSingleColor(0xff, 4, Color.red));
+		methods.add(new MandelbrotHistogramGpu(0xff, 4, Color.red));
 		methods.add(new NormalizedEscapeSingleColor(0xff, 4, Color.red));
-		
-		methods.add(new BurningShipHistogramSingleColor(0xff, 4, Color.red));
+
+//		methods.add(new BurningShipHistogramSingleColor(0xff, 4, Color.red));
+		methods.add(new BurningShipHistogramGpu(0xff, 4, Color.red));
 		selected = methods.get(0);
 	}
 	

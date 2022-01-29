@@ -14,9 +14,9 @@ public class MandelbrotHistogramSingleColor extends HistogramSingleColor {
 
 	@Override
 	protected double escape(Complex c) {
-		double real = 0;//c.getReal();
-		double image = 0;//c.getImaginary();
-		
+		double real = 0;// c.getReal();
+		double image = 0;// c.getImaginary();
+
 //		Complex c2 = new Complex(-0.8, 0.156);
 //		Complex c2 = new Complex(-0.4, 0.6);
 //		Complex c2 = new Complex(0, -0.8);
@@ -31,8 +31,8 @@ public class MandelbrotHistogramSingleColor extends HistogramSingleColor {
 //				normalizedRates[x][y] = i + 1 - Math.log10(Math.log(s1 + s2) / Math.log(2));
 				return i + 1 - Math.log10(Math.log(s1 + s2) / Math.log(2));
 			}
-			double real2 = s1 - s2 + c.getReal(); //c2 for julia
-			double image2 = 2 * real * image + c.getImaginary(); //c2 for julia
+			double real2 = s1 - s2 + c.getReal(); // c2 for julia
+			double image2 = 2 * real * image + c.getImaginary(); // c2 for julia
 			real = real2;
 			image = image2;
 		}
