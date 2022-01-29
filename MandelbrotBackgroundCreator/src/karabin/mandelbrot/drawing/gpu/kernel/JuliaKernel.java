@@ -2,6 +2,7 @@ package karabin.mandelbrot.drawing.gpu.kernel;
 
 public class JuliaKernel extends FractalKernel {
 	private double alpha = Math.PI - .15;
+
 	@Override
 	public void run() {
 		final int width = this.getGlobalSize(0);
