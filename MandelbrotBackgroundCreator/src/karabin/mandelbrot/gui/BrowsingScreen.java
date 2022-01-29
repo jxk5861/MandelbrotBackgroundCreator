@@ -5,7 +5,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import karabin.mandelbrot.gui.listener.ZoomMouseListener;
 import karabin.mandelbrot.gui.panels.ControlsPanel;
 import karabin.mandelbrot.gui.panels.ImagePanel;
 

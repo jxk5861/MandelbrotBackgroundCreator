@@ -14,7 +14,6 @@ import java.awt.geom.Rectangle2D;
 
 import org.apache.commons.math3.complex.Complex;
 
-import karabin.mandelbrot.gui.panels.ControlsPanel;
 import karabin.mandelbrot.gui.panels.ImagePanel;
 import karabin.mandelbrot.utils.FractalUtils;
 
