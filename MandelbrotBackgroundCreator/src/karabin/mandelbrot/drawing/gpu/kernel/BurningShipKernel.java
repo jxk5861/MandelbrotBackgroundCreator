@@ -12,7 +12,7 @@ public class BurningShipKernel extends FractalKernel {
 		// This does what MandelbrotUtils.pixelToComplex does, since we can't use Java
 		// objects.
 		final double cr = this.dw * xg / width + this.dx;
-		final double ci = dh * yg / height + dy;
+		final double ci = this.dh * yg / height + this.dy;
 
 		double real = 0;
 		double image = 0;
