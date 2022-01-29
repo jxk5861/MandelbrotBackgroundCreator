@@ -2,6 +2,7 @@ package karabin.mandelbrot.gui;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import karabin.mandelbrot.gui.listener.ZoomMouseListener;
@@ -16,8 +17,12 @@ public class BrowsingScreen extends JFrame {
 	private JPanel controlsPanel;
 
 	public BrowsingScreen(int width, int height) {
-		imagePanel = new ImagePanel(width, height);
-		controlsPanel = new ControlsPanel(width, 60, imagePanel);
+		JLabel domainX = new JLabel("x: -2.5");
+		JLabel domainY = new JLabel("y: -1.0");
+		JLabel domainW = new JLabel("w: 3.5");
+		JLabel domainH = new JLabel("h: 2.0");
+		imagePanel = new ImagePanel(width, height, domainX, domainY, domainW, domainH);
+		controlsPanel = new ControlsPanel(width, 80, imagePanel, domainX, domainY, domainW, domainH);
 
 //		imagePanel.setPreferredSize(new Dimension(width, height));
 //		controlsPanel.setPreferredSize(new Dimension(200, height));

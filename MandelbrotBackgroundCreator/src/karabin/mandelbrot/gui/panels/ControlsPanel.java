@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
@@ -42,6 +43,11 @@ public class ControlsPanel extends JPanel {
 	private JPanel chooseColor;
 	private JLabel iterationsLabel;
 	private JTextField iterationsField;
+	
+	private JLabel domainX;
+	private JLabel domainY;
+	private JLabel domainW;
+	private JLabel domainH;
 
 	private JList<DrawingMethod> list;
 	private JButton printButton;
@@ -50,7 +56,8 @@ public class ControlsPanel extends JPanel {
 
 	private Map<DrawingMethod, ColorGradient> gradientMap;
 
-	public ControlsPanel(int width, int height, ImagePanel panel) {
+	public ControlsPanel(int width, int height, ImagePanel panel, JLabel domainX, JLabel domainY, JLabel domainW,
+			JLabel domainH) {
 		gradientMap = new HashMap<>();
 
 		this.panel = panel;
@@ -120,7 +127,7 @@ public class ControlsPanel extends JPanel {
 //		});
 
 		this.iterationsLabel = new JLabel("Iterations: ");
-		this.iterationsField = new JTextField("255", 3);
+		this.iterationsField = new JTextField("255", 6);
 		this.iterationsField.addKeyListener(new KeyListener() {
 
 			@Override
@@ -205,13 +212,26 @@ public class ControlsPanel extends JPanel {
 		});
 
 		this.gradientCreator = new GradientPanel(chooseColor, panel, gradientMap.get(drawingMethods.get(0)));
+
+		this.domainX = domainX;
+		this.domainY = domainY;
+		this.domainW = domainW;
+		this.domainH = domainH;
 		
+		JPanel domainPanel = new JPanel();
+		domainPanel.setLayout(new BoxLayout(domainPanel, BoxLayout.Y_AXIS));
+		domainPanel.add(this.domainX);
+		domainPanel.add(this.domainY);
+		domainPanel.add(this.domainW);
+		domainPanel.add(this.domainH);
+
 		this.add(gradientCreator);
 		this.add(chooseColor);
 		this.add(iterationsLabel);
 		this.add(iterationsField);
 		this.add(printButton);
 		this.add(list);
+		this.add(domainPanel);
 
 		this.setPreferredSize(new Dimension(width, height));
 	}

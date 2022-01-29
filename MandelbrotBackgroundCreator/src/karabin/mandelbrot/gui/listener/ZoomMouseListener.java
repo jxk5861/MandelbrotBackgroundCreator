@@ -14,6 +14,7 @@ import java.awt.geom.Rectangle2D;
 
 import org.apache.commons.math3.complex.Complex;
 
+import karabin.mandelbrot.gui.panels.ControlsPanel;
 import karabin.mandelbrot.gui.panels.ImagePanel;
 import karabin.mandelbrot.utils.FractalUtils;
 
@@ -76,7 +77,7 @@ public class ZoomMouseListener implements MouseWheelListener, MouseListener, Mou
 			tr2.transform(l, l2);
 			tr2.transform(r, r2);
 
-			domain.setRect(l2.getX(), l2.getY(), r2.getX() - l2.getX(), r2.getY() - l2.getY());
+			panel.domainSetRect(l2.getX(), l2.getY(), r2.getX() - l2.getX(), r2.getY() - l2.getY());
 		} else {
 			try {
 				tr2.invert();
@@ -93,7 +94,7 @@ public class ZoomMouseListener implements MouseWheelListener, MouseListener, Mou
 			tr2.transform(l, l2);
 			tr2.transform(r, r2);
 
-			domain.setRect(l2.getX(), l2.getY(), r2.getX() - l2.getX(), r2.getY() - l2.getY());
+			panel.domainSetRect(l2.getX(), l2.getY(), r2.getX() - l2.getX(), r2.getY() - l2.getY());
 		}
 
 		panel.draw();
@@ -152,7 +153,7 @@ public class ZoomMouseListener implements MouseWheelListener, MouseListener, Mou
 		
 		Rectangle2D domain = panel.getDomain();
 
-		domain.setRect(rx + offset.getReal(),ry + offset.getImaginary(), domain.getWidth(), domain.getHeight());
+		panel.domainSetRect(rx + offset.getReal(),ry + offset.getImaginary(), domain.getWidth(), domain.getHeight());
 
 		panel.draw();
 	}
