@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
-import org.apache.commons.math3.complex.Complex;
-
 import karabin.mandelbrot.drawing.gpu.kernel.FractalKernel;
 
 public abstract class HistogramGpu extends DrawingMethodGpu {
@@ -13,8 +11,6 @@ public abstract class HistogramGpu extends DrawingMethodGpu {
 	public HistogramGpu(int iterations, int max, Color color, FractalKernel kernel) {
 		super(iterations, max, color, kernel);
 	}
-
-	protected abstract double escape(Complex c);
 
 	@Override
 	public void draw(BufferedImage image, Rectangle2D unsafeDomain) {
