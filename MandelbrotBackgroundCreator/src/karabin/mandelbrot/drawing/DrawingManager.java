@@ -19,7 +19,7 @@ public enum DrawingManager {
 		methods.add(new MandelbrotHistogramGpu(0xff, 4, Color.red));
 		methods.add(new BurningShipHistogramGpu(0xff, 4, Color.red));
 //		methods.add(new GhostShip(0xff, 4, Color.red));
-		
+		//
 		
 		
 //		methods.add(new JuliaHistogramGpu(0xff, 4, Color.red));
