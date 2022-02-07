@@ -6,6 +6,7 @@ import java.util.List;
 
 import karabin.mandelbrot.drawing.gpu.burningship.BurningShipHistogramGpu;
 import karabin.mandelbrot.drawing.gpu.mandelbrot.MandelbrotHistogramGpu;
+import karabin.mandelbrot.drawing.mulithreaded.burningship.GhostShip;
 
 public enum DrawingManager {
 	INSTANCE;
@@ -18,6 +19,7 @@ public enum DrawingManager {
 		
 		methods.add(new MandelbrotHistogramGpu(0xff, 4, Color.red));
 		methods.add(new BurningShipHistogramGpu(0xff, 4, Color.red));
+		methods.add(new GhostShip(0xff, 4, Color.red));
 		
 		
 		
