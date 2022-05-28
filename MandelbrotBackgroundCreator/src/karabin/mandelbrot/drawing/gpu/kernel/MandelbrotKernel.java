@@ -1,6 +1,7 @@
 package karabin.mandelbrot.drawing.gpu.kernel;
 
 public class MandelbrotKernel extends FractalKernel {
+
 	@Override
 	public void run() {
 		final int width = this.getGlobalSize(0);
@@ -35,6 +36,8 @@ public class MandelbrotKernel extends FractalKernel {
 			real = temp;
 		}
 
+		// id must be defined immediately for Aparapi to run on GPU without kernel
+		// compilation errors.
 		double id = Double.NaN;
 		if (i != iterations - 5) {
 			// Additional iterations to minimize error in normalized escape calculation.

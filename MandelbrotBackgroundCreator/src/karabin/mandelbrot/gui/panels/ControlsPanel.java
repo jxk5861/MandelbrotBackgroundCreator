@@ -37,6 +37,10 @@ import karabin.mandelbrot.drawing.coloring.ColorStrategy;
 import karabin.mandelbrot.drawing.coloring.MapMultiColorStrategy;
 import karabin.mandelbrot.printing.ImagePrinter;
 
+/**
+ * The panel with the controls such as gradient controls, domain controls, and
+ * number of iterations as well as some information.
+ */
 public class ControlsPanel extends JPanel {
 	private static final long serialVersionUID = -8346672836124829397L;
 

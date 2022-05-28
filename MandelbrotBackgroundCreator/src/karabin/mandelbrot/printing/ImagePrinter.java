@@ -14,6 +14,10 @@ import javax.imageio.ImageIO;
 
 import karabin.mandelbrot.drawing.DrawingManager;
 
+/**
+ * The image printer is used to print images to a folder. It is a singleton
+ * class.
+ */
 public enum ImagePrinter {
 	INSTANCE;
 
@@ -21,10 +25,13 @@ public enum ImagePrinter {
 
 	}
 
+	/**
+	 * Print the current region to a file with resolution width x height.
+	 */
 	public void printToPNG(File file, int width, int height, Rectangle2D domain) {
 		int id = getNextFileId(file);
 
-		// Log the fractal's domain.
+		// Log the fractal's domain and the color gradient.
 		String fractalString = String.format("Fractal%d.png", id);
 		try (PrintWriter pw = new PrintWriter(new FileOutputStream(new File(file, "Fractal Logs.txt"), true))) {
 			pw.println(fractalString + " " + domain.toString());
@@ -46,9 +53,16 @@ public enum ImagePrinter {
 		}
 	}
 
-	private int getNextFileId(File file) {
+	/**
+	 * Find the next file name in the folder by finding the largest number from
+	 * files of the form: Fractal{number}.png and adding one to it.
+	 * 
+	 * If the folder has Fractal1.png & Fractal3.png the next image name will be
+	 * Fractal4.png.
+	 */
+	private int getNextFileId(File folder) {
 		int id = 1;
-		for (File f : file.listFiles()) {
+		for (File f : folder.listFiles()) {
 			if (f.getName().matches("Fractal\\d+.png")) {
 				Pattern pattern = Pattern.compile("\\d+");
 				Matcher matcher = pattern.matcher(f.getName());

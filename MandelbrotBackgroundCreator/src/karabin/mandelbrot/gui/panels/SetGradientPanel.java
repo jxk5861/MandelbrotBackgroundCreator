@@ -20,7 +20,15 @@ import javax.swing.JPanel;
 
 import karabin.mandelbrot.drawing.coloring.ColorGradient;
 
+/**
+ * A panel for the menu that is displayed when the user clicks the Set Gradient
+ * button. It allows the user to parse the gradient from their clipboard.
+ * 
+ * The gradient should be copied from the log file.
+ */
 public class SetGradientPanel extends JPanel {
+	private static final long serialVersionUID = 363023915611859340L;
+
 	private JButton parseClipboard;
 	private JLabel gradientLabel;
 	private ColorGradient gradient;
@@ -112,6 +120,10 @@ public class SetGradientPanel extends JPanel {
 		this.add(gradientLabel);
 	}
 
+	/**
+	 * Get the color gradient set by the user or use the initial gradient if none is
+	 * set.
+	 */
 	public ColorGradient getGradient() {
 		return gradient;
 	}

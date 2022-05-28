@@ -22,6 +22,7 @@ import karabin.mandelbrot.drawing.coloring.ColorStrategy;
 import karabin.mandelbrot.drawing.coloring.MapMultiColorStrategy;
 
 public class GradientPanel extends JComponent {
+	private static final long serialVersionUID = -4970089266824739463L;
 
 	private static final int MARGIN = 5;
 	private static final int WIDTH = 150;

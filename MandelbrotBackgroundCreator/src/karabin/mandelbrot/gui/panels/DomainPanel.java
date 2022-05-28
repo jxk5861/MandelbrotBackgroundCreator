@@ -20,48 +20,19 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-class DoubleFieldListener implements KeyListener {
-
-	private JTextField field;
-
-	public DoubleFieldListener(JTextField field) {
-		super();
-		this.field = field;
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		try {
-			Double.parseDouble(this.field.getText());
-			field.setForeground(Color.BLACK);
-		} catch (NumberFormatException e2) {
-			field.setForeground(Color.RED);
-		}
-	}
-
-}
-
 public class DomainPanel extends JPanel {
-	JLabel x;
-	JTextField xi;
-	JLabel y;
-	JTextField yi;
-	JLabel w;
-	JTextField wi;
-	JLabel h;
-	JTextField hi;
+	private static final long serialVersionUID = -4421711283865833384L;
+	
+	private JLabel x;
+	private JTextField xi;
+	private JLabel y;
+	private JTextField yi;
+	private JLabel w;
+	private JTextField wi;
+	private JLabel h;
+	private JTextField hi;
 
-	JButton parseClipboardButton;
+	private JButton parseClipboardButton;
 
 	public DomainPanel(final Rectangle2D currentDomain) {
 		x = new JLabel("x: ");
@@ -152,7 +123,7 @@ public class DomainPanel extends JPanel {
 		this.add(parseClipboardButton);
 	}
 
-	public Rectangle2D getDomain() {
+	public Rectangle2D getDomain() throws NumberFormatException {
 		double x = Double.parseDouble(xi.getText());
 		double y = Double.parseDouble(yi.getText());
 		double w = Double.parseDouble(wi.getText());
@@ -160,4 +131,35 @@ public class DomainPanel extends JPanel {
 
 		return new Rectangle2D.Double(x, y, w, h);
 	}
+}
+
+class DoubleFieldListener implements KeyListener {
+
+	private JTextField field;
+
+	public DoubleFieldListener(JTextField field) {
+		super();
+		this.field = field;
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		try {
+			Double.parseDouble(this.field.getText());
+			field.setForeground(Color.BLACK);
+		} catch (NumberFormatException e2) {
+			field.setForeground(Color.RED);
+		}
+	}
+
 }

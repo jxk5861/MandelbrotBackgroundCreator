@@ -24,8 +24,9 @@ public class BurningShipKernel extends FractalKernel {
 			image = 2 * Math.abs(real * image) + ci;
 			real = temp;
 		}
-		
-		// id must be defined immediately for Aparapi to run on GPU without kernel compilation errors.
+
+		// id must be defined immediately for Aparapi to run on GPU without kernel
+		// compilation errors.
 		double id = Double.NaN;
 		if (i != iterations) {
 			// Additional iterations to minimize error in normalized escape calculation.

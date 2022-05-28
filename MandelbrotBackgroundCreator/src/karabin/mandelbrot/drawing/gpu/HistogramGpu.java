@@ -6,12 +6,36 @@ import java.awt.image.BufferedImage;
 
 import karabin.mandelbrot.drawing.gpu.kernel.FractalKernel;
 
+/**
+ * The abstract Histogram implementation which can take a list of rates from the
+ * computeRates method and draw them on an image with the histogram algorithm.
+ * 
+ * Histogram ensures that differences are always visible in the image and do not
+ * disappear as the number of iterations increases. For example, if iterations
+ * is set to 10 million, then a point with 300 thousand iterations would appear
+ * the same as a point with 1 iteration when using
+ * color=iterations/maxIterations as a coloring algorithm. Histogram fixes this
+ * by grouping common numbers of iterations in buckets and coloring each bucket
+ * differently.
+ */
 public abstract class HistogramGpu extends DrawingMethodGpu {
 
+	/**
+	 * Create a new HistogramGpu implementation. Most implementations will only need
+	 * to change the type of FractalKernel used so that it produces different escape
+	 * rates. For example, Mandelbrot, Burning Ship, and Julia sets can all be drawn
+	 * by slightly changing the escape rate function.
+	 */
 	public HistogramGpu(int iterations, int max, Color color, FractalKernel kernel) {
 		super(iterations, max, color, kernel);
 	}
 
+	/**
+	 * Compute the rates from the implemented GPU kernel and render the image based
+	 * on the rates. This allows different implementations of Histogram to reuse
+	 * this method and only provide an implementation of the GPU kernel for the
+	 * specific algorithm.
+	 */
 	@Override
 	public void draw(BufferedImage image, Rectangle2D unsafeDomain) {
 		final int width = image.getWidth();
@@ -55,8 +79,11 @@ public abstract class HistogramGpu extends DrawingMethodGpu {
 				for (int i = 0; i <= iteration; i++) {
 					hue += (double) numIterationsPerPixel[i] / total;
 				}
-				// For Mandelbrot Normalized Escape iterations will smooth it out but for
-				// Burning Ship it will change nothing.
+
+				// If the iteration count is fractional then interpolate between
+				// floor(iteration) and ceil(iteration) to produce smooth gradients. Normal
+				// implementations will produce only integer values but normalized escape
+				// allows for fractional values to produce better images.
 				if (iteration != 0 && (int) iteration + 1 < this.iterations + 1) {
 					hue += (iteration % 1) * numIterationsPerPixel[(int) iteration + 1] / total;
 				}
