@@ -1,7 +1,8 @@
 package karabin.mandelbrot.drawing.gpu.kernel;
 
 public class BurningShipKernel extends FractalKernel {
-
+	private static final double LOG_2 = Math.log(2);
+	
 	@Override
 	public void run() {
 		final int width = this.getGlobalSize(0);
@@ -37,7 +38,7 @@ public class BurningShipKernel extends FractalKernel {
 			}
 
 			double logzn = Math.log(real * real + image * image) / 2;
-			id = i + 1 - Math.log(logzn / Math.log(2)) / Math.log(2);
+			id = i + 1 - Math.log(logzn / LOG_2) / LOG_2;
 		}
 
 		rates[xg + yg * width] = id;

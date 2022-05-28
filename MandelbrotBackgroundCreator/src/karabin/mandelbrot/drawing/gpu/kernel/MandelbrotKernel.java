@@ -1,6 +1,7 @@
 package karabin.mandelbrot.drawing.gpu.kernel;
 
 public class MandelbrotKernel extends FractalKernel {
+	private static final double LOG_2 = Math.log(2);
 
 	@Override
 	public void run() {
@@ -48,7 +49,7 @@ public class MandelbrotKernel extends FractalKernel {
 			}
 
 			double logzn = Math.log(real * real + image * image) / 2;
-			id = i + 1 + 5 - Math.log(logzn / Math.log(2)) / Math.log(2);
+			id = i + 1 + 5 - Math.log(logzn / LOG_2) / LOG_2;
 		}
 
 		rates[xg + yg * width] = id;
