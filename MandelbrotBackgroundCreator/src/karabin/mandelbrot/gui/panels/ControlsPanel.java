@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -43,11 +45,13 @@ public class ControlsPanel extends JPanel {
 	private JPanel chooseColor;
 	private JLabel iterationsLabel;
 	private JTextField iterationsField;
-	
+
 	private JLabel domainX;
 	private JLabel domainY;
 	private JLabel domainW;
 	private JLabel domainH;
+
+	private JButton domainButton;
 
 	private JList<DrawingMethod> list;
 	private JButton printButton;
@@ -217,7 +221,29 @@ public class ControlsPanel extends JPanel {
 		this.domainY = domainY;
 		this.domainW = domainW;
 		this.domainH = domainH;
-		
+
+		this.domainButton = new JButton("Set Domain");
+		this.domainButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				DomainPanel panel = new DomainPanel(ControlsPanel.this.panel.getDomain());
+				int option = JOptionPane.showInternalConfirmDialog(null, panel, "Domain Selection",
+						JOptionPane.OK_CANCEL_OPTION);
+				if (option == JOptionPane.OK_OPTION) {
+					try {
+						Rectangle2D domain = panel.getDomain();
+						ControlsPanel.this.panel.domainSetRect(domain.getX(), domain.getY(), domain.getWidth(),
+								domain.getHeight());
+						ControlsPanel.this.panel.draw();
+					} catch (NumberFormatException e2) {
+
+					}
+
+				}
+			}
+		});
+
 		JPanel domainPanel = new JPanel();
 		domainPanel.setLayout(new BoxLayout(domainPanel, BoxLayout.Y_AXIS));
 		domainPanel.add(this.domainX);
@@ -232,6 +258,7 @@ public class ControlsPanel extends JPanel {
 		this.add(printButton);
 		this.add(list);
 		this.add(domainPanel);
+		this.add(this.domainButton);
 
 		this.setPreferredSize(new Dimension(width, height));
 	}

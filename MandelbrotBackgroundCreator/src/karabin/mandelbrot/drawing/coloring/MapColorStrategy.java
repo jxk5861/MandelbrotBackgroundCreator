@@ -21,10 +21,6 @@ public abstract class MapColorStrategy implements ColorStrategy {
 			rate = 1;
 		}
 
-		if(rate == 0) {
-			return Color.BLACK;
-		}
-		
 		return map.ceilingEntry(rate).getValue();
 	}
 }

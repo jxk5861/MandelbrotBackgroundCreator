@@ -16,11 +16,11 @@ public abstract class NormalizedEscapeGpu extends DrawingMethodGpu {
 	public void draw(BufferedImage image, Rectangle2D unsafeDomain) {
 		final int width = image.getWidth();
 		final int height = image.getHeight();
-		int [][] rates = this.computeRates(width, height, unsafeDomain);
+		double [][] rates = this.computeRates(width, height, unsafeDomain);
 		
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				int iteration = rates[x][y];
+				double iteration = rates[x][y];
 				double hue = (double) iteration / this.iterations;
 				image.setRGB(x, y, this.color(hue));
 			}
