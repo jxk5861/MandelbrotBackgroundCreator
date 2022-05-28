@@ -3,7 +3,7 @@ package karabin.mandelbrot.drawing;
 import java.awt.Color;
 
 import karabin.mandelbrot.drawing.coloring.ColorStrategy;
-import karabin.mandelbrot.drawing.coloring.MapSingleColorStrategy;
+import karabin.mandelbrot.drawing.coloring.SingleColorStrategy;
 
 public abstract class DrawingMethod implements DrawingMethodIF {
 
@@ -16,7 +16,7 @@ public abstract class DrawingMethod implements DrawingMethodIF {
 		super();
 		this.iterations = iterations;
 		this.max = max;
-		this.coloring = new MapSingleColorStrategy(color);
+		this.coloring = new SingleColorStrategy(color);
 	}
 
 	protected int color(double rate) {

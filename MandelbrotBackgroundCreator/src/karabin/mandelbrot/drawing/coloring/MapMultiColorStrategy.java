@@ -41,4 +41,8 @@ public class MapMultiColorStrategy extends MapColorStrategy {
 		}
 	}
 
+	@Override
+	public String toString() {
+		return "MapMultiColorStrategy [colorGraph=" + colorGraph + "]";
+	}	
 }

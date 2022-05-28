@@ -2,6 +2,7 @@ package karabin.mandelbrot.gui.panels;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -43,6 +44,7 @@ public class ControlsPanel extends JPanel {
 
 	private GradientPanel gradientCreator;
 	private JPanel chooseColor;
+
 	private JLabel iterationsLabel;
 	private JTextField iterationsField;
 
@@ -52,6 +54,7 @@ public class ControlsPanel extends JPanel {
 	private JLabel domainH;
 
 	private JButton domainButton;
+	private JButton setGradient;
 
 	private JList<DrawingMethod> list;
 	private JButton printButton;
@@ -244,6 +247,22 @@ public class ControlsPanel extends JPanel {
 			}
 		});
 
+		this.setGradient = new JButton("Set Gradient");
+		this.setGradient.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				SetGradientPanel panel = new SetGradientPanel(ControlsPanel.this.gradientCreator.getGradient());
+				int option = JOptionPane.showInternalConfirmDialog(null, panel, "Gradient Loader",
+						JOptionPane.OK_CANCEL_OPTION);
+				if (option == JOptionPane.OK_OPTION) {
+					ControlsPanel.this.gradientCreator.setGradient(panel.getGradient());
+					ControlsPanel.this.gradientCreator.redraw();
+					ControlsPanel.this.panel.draw();
+				}
+			}
+		});
+
 		JPanel domainPanel = new JPanel();
 		domainPanel.setLayout(new BoxLayout(domainPanel, BoxLayout.Y_AXIS));
 		domainPanel.add(this.domainX);
@@ -258,7 +277,13 @@ public class ControlsPanel extends JPanel {
 		this.add(printButton);
 		this.add(list);
 		this.add(domainPanel);
-		this.add(this.domainButton);
+
+		JPanel setPanel = new JPanel();
+		setPanel.setLayout(new GridLayout(2, 1));
+		setPanel.add(this.domainButton);
+		setPanel.add(this.setGradient);
+
+		this.add(setPanel);
 
 		this.setPreferredSize(new Dimension(width, height));
 	}

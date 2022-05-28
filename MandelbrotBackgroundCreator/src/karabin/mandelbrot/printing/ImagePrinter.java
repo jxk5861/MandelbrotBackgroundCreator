@@ -28,6 +28,8 @@ public enum ImagePrinter {
 		String fractalString = String.format("Fractal%d.png", id);
 		try (PrintWriter pw = new PrintWriter(new FileOutputStream(new File(file, "Fractal Logs.txt"), true))) {
 			pw.println(fractalString + " " + domain.toString());
+			pw.println(DrawingManager.INSTANCE.getSelected().getColoring().toString());
+			pw.println();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

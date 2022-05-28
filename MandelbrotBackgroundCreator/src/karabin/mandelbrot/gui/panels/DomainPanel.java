@@ -105,6 +105,9 @@ public class DomainPanel extends JPanel {
 						String value = m.group().substring(2);
 						xi.setText(Double.toString(Double.parseDouble(value)));
 						xi.setForeground(Color.BLACK);
+					} else {
+						parseClipboardButton.setForeground(Color.RED);
+						return;
 					}
 					p = Pattern.compile("y=-?[0-9]+.?[0-9]*E?-?[0-9]*");
 					m = p.matcher(data);
@@ -112,6 +115,9 @@ public class DomainPanel extends JPanel {
 						String value = m.group().substring(2);
 						yi.setText(Double.toString(Double.parseDouble(value)));
 						yi.setForeground(Color.BLACK);
+					} else {
+						parseClipboardButton.setForeground(Color.RED);
+						return;
 					}
 					p = Pattern.compile("w=-?[0-9]+.?[0-9]*E?-?[0-9]*");
 					m = p.matcher(data);
@@ -119,6 +125,9 @@ public class DomainPanel extends JPanel {
 						String value = m.group().substring(2);
 						wi.setText(Double.toString(Double.parseDouble(value)));
 						wi.setForeground(Color.BLACK);
+					} else {
+						parseClipboardButton.setForeground(Color.RED);
+						return;
 					}
 					p = Pattern.compile("h=-?[0-9]+.?[0-9]*E?-?[0-9]*");
 					m = p.matcher(data);
@@ -126,11 +135,15 @@ public class DomainPanel extends JPanel {
 						String value = m.group().substring(2);
 						hi.setText(Double.toString(Double.parseDouble(value)));
 						hi.setForeground(Color.BLACK);
+					} else {
+						parseClipboardButton.setForeground(Color.RED);
+						return;
 					}
+					parseClipboardButton.setForeground(Color.BLACK);
 				} catch (HeadlessException | UnsupportedFlavorException | IOException e1) {
 					e1.printStackTrace();
 				} catch (NumberFormatException e2) {
-
+					parseClipboardButton.setForeground(Color.RED);
 				}
 			}
 		});
