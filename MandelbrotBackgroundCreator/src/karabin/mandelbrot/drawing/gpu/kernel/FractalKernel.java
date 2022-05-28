@@ -5,7 +5,7 @@ import java.awt.geom.Rectangle2D;
 import com.aparapi.Kernel;
 
 public abstract class FractalKernel extends Kernel {
-	protected int[] rates;
+	protected double[] rates;
 	protected double dw;
 	protected double dh;
 	protected double dx;
@@ -13,7 +13,7 @@ public abstract class FractalKernel extends Kernel {
 	protected int iterations;
 	protected int max;
 
-	public void set(Rectangle2D domain, int iterations, int max, int[] rates) {
+	public void set(Rectangle2D domain, int iterations, int max, double[] rates) {
 		this.dw = domain.getWidth();
 		this.dh = domain.getHeight();
 		this.dx = domain.getX();

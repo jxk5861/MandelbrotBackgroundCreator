@@ -14,6 +14,7 @@ import java.awt.geom.Rectangle2D;
 
 import org.apache.commons.math3.complex.Complex;
 
+import karabin.mandelbrot.drawing.DrawingManager;
 import karabin.mandelbrot.gui.panels.ImagePanel;
 import karabin.mandelbrot.utils.FractalUtils;
 
@@ -138,7 +139,47 @@ public class ZoomMouseListener implements MouseWheelListener, MouseListener, Mou
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-
+//		Rectangle2D domain = panel.getDomain();
+//		
+//		double dw = domain.getWidth();
+//		double dh = domain.getHeight();
+//		double dx = domain.getX();
+//		double dy = domain.getY();
+//		double xg = e.getPoint().getX();
+//		double yg = e.getPoint().getY();
+//		
+//		int iterations = DrawingManager.INSTANCE.getSelected().getIterations();
+//		int max = DrawingManager.INSTANCE.getSelected().getMax();
+//		
+//		final double cr = dw * xg / width + dx;
+//		final double ci = dh * yg / height + dy;
+//
+//		double real = 0;
+//		double image = 0;
+//		double temp = 0;
+//
+//		double i;
+//		for (i = 0; i < iterations && real * real + image * image < 40000; i++) {
+//			temp = real * real - image * image + cr;
+//			image = 2 * real * image + ci;
+//			real = temp;
+//		}
+//		System.out.println(i);
+//		if (i == iterations) {
+//			i = -1;
+//		} else {
+//			temp = real * real - image * image + cr;
+//			image = 2 * real * image + ci;
+//			real = temp;
+//			temp = real * real - image * image + cr;
+//			image = 2 * real * image + ci;
+//			real = temp;
+//			
+//			double logzn = Math.log(real * real + image * image) / 2;
+//			i = i+1-Math.log(logzn / Math.log(2)) / Math.log(2);
+////			i = i + 1 - Math.log(Math.log(real * real + image * image) / Math.log(2));
+//		}
+//		System.out.println(i);
 	}
 
 	private void reDraw(int x, int y) {

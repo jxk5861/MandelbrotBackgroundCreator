@@ -16,12 +16,12 @@ public abstract class DrawingMethodGpu extends DrawingMethod{
 		this.kernel = kernel;
 	}
 
-	protected int[][] computeRates(final int width, final int height, final Rectangle2D unsafeDomain){
+	protected double[][] computeRates(final int width, final int height, final Rectangle2D unsafeDomain){
 		
 		final Rectangle2D domain = (Rectangle2D) unsafeDomain.clone();
-		final int[][] rates = new int[width][height];
+		final double[][] rates = new double[width][height];
 
-		final int[] rates1D = new int[width * height];
+		final double[] rates1D = new double[width * height];
 
 		kernel.set(domain, this.iterations, this.max, rates1D);
 		Range range = Range.create2D(width, height);
