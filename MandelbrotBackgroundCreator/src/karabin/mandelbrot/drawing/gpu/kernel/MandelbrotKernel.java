@@ -48,6 +48,6 @@ public class MandelbrotKernel extends FractalKernel {
 			id = i + 1 + 5 - Math.log(logzn / Math.log(2)) / Math.log(2);
 		}
 
-		rates[xg + yg * width] = i == iterations - 5 ? Double.NaN : i;
+		rates[xg + yg * width] = id;
 	}
 }
