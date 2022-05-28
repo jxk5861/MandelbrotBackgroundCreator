@@ -23,9 +23,12 @@ To change a selectors color, double click on it or select it and press the color
 #### New Smooth Images
 <img src="sample_images/gradients/Fractal52.png" alt="drawing" width="600"/>
 <img src="sample_images/gradients/Fractal53.png" alt="drawing" width="600"/>
-<img src="sample_images/gradients/Fractal47.png" alt="drawing" width="600"/>
+<!-- <img src="sample_images/gradients/Fractal47.png" alt="drawing" width="600"/> -->
 <img src="sample_images/gradients/Fractal48.png" alt="drawing" width="600"/>
 <img src="sample_images/gradients/Fractal54.png" alt="drawing" width="600"/>
+<img src="sample_images/gradients/Fractal57.png" alt="drawing" width="600"/>
+<img src="sample_images/gradients/Fractal59.png" alt="drawing" width="600"/>
+<img src="sample_images/gradients/Fractal60.png" alt="drawing" width="600"/>
 
 
 #### Old Images (No Smooth Rendering)
