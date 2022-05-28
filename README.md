@@ -11,6 +11,8 @@ Click and drag to pan around the fractal image. Use the mouse wheel to scroll in
 To change a selectors color, double click on it or select it and press the color panel to the right. To delete a selector, select it and then press the backspace or delete key on the keyboard. Once an cool region is found, press print <!--and select the desired resolution -->to print it to an image.
 
 ### Sample Images
+<img src="sample_images/gradients/Fractal10.png" alt="drawing" width="600"/>
+<img src="sample_images/gradients/Fractal11.png" alt="drawing" width="600"/>
 <!--
 <img src="MandelbrotBackgroundCreator/sample_images/mandelbrot_original.png" alt="drawing" width="400"/>
 <img src="MandelbrotBackgroundCreator/sample_images/mandelbrots.png" alt="drawing" width="400"/>
@@ -18,15 +20,22 @@ To change a selectors color, double click on it or select it and press the color
 <img src="MandelbrotBackgroundCreator/sample_images/mandelbrot6.png" alt="drawing" width="400"/>
 --->
 
+#### New Smooth Images
+<img src="sample_images/gradients/Fractal52.png" alt="drawing" width="600"/>
+<img src="sample_images/gradients/Fractal53.png" alt="drawing" width="600"/>
+<img src="sample_images/gradients/Fractal47.png" alt="drawing" width="600"/>
+<img src="sample_images/gradients/Fractal48.png" alt="drawing" width="600"/>
+<img src="sample_images/gradients/Fractal54.png" alt="drawing" width="600"/>
 
 
-<img src="sample_images/gradients/Fractal10.png" alt="drawing" width="600"/>
-<img src="sample_images/gradients/Fractal11.png" alt="drawing" width="600"/>
+#### Old Images (No Smooth Rendering)
+<img src="sample_images/generated/BurningShip2.png" alt="drawing" width="600"/>
+<img src="sample_images/gradients/Fractal23.png" alt="drawing" width="600"/>
+<img src="sample_images/gradients/Fractal24.png" alt="drawing" width="600"/>
 <img src="sample_images/gradients/Fractal3.png" alt="drawing" width="600"/>
 <img src="sample_images/gradients/Fractal13.png" alt="drawing" width="600"/>
 <img src="sample_images/gradients/Fractal22.png" alt="drawing" width="600"/>
-<img src="sample_images/gradients/Fractal23.png" alt="drawing" width="600"/>
-<img src="sample_images/gradients/Fractal24.png" alt="drawing" width="600"/>
+
 
 <!-- <img src="sample_images/generated/Mandelbrot6.png" alt="drawing" width="600"/> -->
 <img src="sample_images/generated/Mandelbrot7.png" alt="drawing" width="600"/>
@@ -34,7 +43,7 @@ To change a selectors color, double click on it or select it and press the color
 <!-- <img src="sample_images/generated/Mandelbrot8.png" alt="drawing" width="600"/> -->
 <!-- <img src="sample_images/generated/Mandelbrot9.png" alt="drawing" width="600"/> -->
 <!-- <img src="sample_images/generated/Mandelbrot10.png" alt="drawing" width="600"/> -->
-<img src="sample_images/generated/BurningShip2.png" alt="drawing" width="600"/>
+
 <!-- <img src="sample_images/generated/BurningShip3.png" alt="drawing" width="600"/> -->
 
 <img src="sample_images/gradients/Fractal8.png" alt="drawing" width="600"/>
