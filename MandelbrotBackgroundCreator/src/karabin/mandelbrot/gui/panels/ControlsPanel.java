@@ -11,9 +11,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -44,7 +49,7 @@ import karabin.mandelbrot.printing.ImagePrinter;
 public class ControlsPanel extends JPanel {
 	private static final long serialVersionUID = -8346672836124829397L;
 
-	private ImagePanel panel;
+	private ImagePanel imagePanel;
 
 	private GradientPanel gradientCreator;
 	private JPanel chooseColor;
@@ -62,16 +67,22 @@ public class ControlsPanel extends JPanel {
 
 	private JList<DrawingMethod> list;
 	private JButton printButton;
+	private JButton printOptions;
 
 	private File file;
 
 	private Map<DrawingMethod, ColorGradient> gradientMap;
 
-	public ControlsPanel(int width, int height, ImagePanel panel, JLabel domainX, JLabel domainY, JLabel domainW,
+	private int printWidth = 1920;
+	private int printHeight = 1080;
+
+	private int printSelected = 0;
+
+	public ControlsPanel(int width, int height, ImagePanel imagePanel, JLabel domainX, JLabel domainY, JLabel domainW,
 			JLabel domainH) {
 		gradientMap = new HashMap<>();
 
-		this.panel = panel;
+		this.imagePanel = imagePanel;
 
 		List<DrawingMethod> drawingMethods = DrawingManager.INSTANCE.getDrawingMethods();
 		for (int i = 0; i < drawingMethods.size(); i++) {
@@ -101,7 +112,7 @@ public class ControlsPanel extends JPanel {
 					ControlsPanel.this.gradientCreator.repaint();
 					ColorStrategy coloring = MapMultiColorStrategy.of(ControlsPanel.this.gradientCreator.getGradient());
 					DrawingManager.INSTANCE.getSelected().setColoring(coloring);
-					ControlsPanel.this.panel.draw();
+					ControlsPanel.this.imagePanel.draw();
 				}
 			}
 
@@ -155,7 +166,7 @@ public class ControlsPanel extends JPanel {
 								String.format("For input string \"%s\"", iterationsField.getText()));
 					}
 					DrawingManager.INSTANCE.getSelected().setIterations(iterations);
-					ControlsPanel.this.panel.draw();
+					ControlsPanel.this.imagePanel.draw();
 					ControlsPanel.this.iterationsField.setForeground(Color.black);
 				} catch (NumberFormatException ee) {
 //					ee.printStackTrace();
@@ -180,7 +191,7 @@ public class ControlsPanel extends JPanel {
 					JFileChooser chooser = new JFileChooser();
 					chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 					// must open due to bug in apple implementation...
-					chooser.showOpenDialog(ControlsPanel.this.panel);
+					chooser.showOpenDialog(ControlsPanel.this);
 					ControlsPanel.this.file = chooser.getSelectedFile();
 
 					if (ControlsPanel.this.file == null) {
@@ -193,7 +204,73 @@ public class ControlsPanel extends JPanel {
 						ControlsPanel.this.file.mkdir();
 					}
 				}
-				ImagePrinter.INSTANCE.printToPNG(file, 1920, 1080, panel.getDomain());
+
+				// 3840x2160, 1920x1080
+				ImagePrinter.INSTANCE.printToPNG(file, printWidth, printHeight, imagePanel.getDomain());
+			}
+		});
+
+		printOptions = new JButton("Print Options");
+		printOptions.addActionListener(e -> {
+			PrintingOptionsPanel pop = new PrintingOptionsPanel(printSelected);
+			int option = JOptionPane.showInternalConfirmDialog(null, pop, "Gradient Loader",
+					JOptionPane.OK_CANCEL_OPTION);
+			if (option == JOptionPane.OK_OPTION && pop.getSelectedIndex() != -1) {
+				printSelected = pop.getSelectedIndex();
+				printWidth = pop.getPrintWidth();
+				printHeight = pop.getPrintHeight();
+
+// Code for finding GCD and its factors to only view the same resolution images.
+// Ex. 16:9 only
+// This isn't used because images can be way too small or way too big.
+//				int a = Math.max(printWidth, printHeight);
+//				int b = Math.min(printWidth, printHeight);
+//
+//				while (b != 0) {
+//					int temp = a % b;
+//					a = b;
+//					b = temp;
+//				}
+//
+//				List<Integer> factors = new ArrayList<>();
+//				final int ceil = a / 2;
+//				for (int i = 2; i <= ceil; i++) {
+//					while (a % i == 0) {
+//						a /= i;
+//						factors.add(i);
+//					}
+//				}
+//
+//				TreeSet<Integer> multiples = new TreeSet<>();
+//				if (factors.size() > 0) {
+//					for (int i = 1; i < 1 << factors.size(); i++) {
+//						int multiple = 1;
+//						for (int j = 0; j < factors.size(); j++) {
+//							if (((i >> j) & 1) == 1) {
+//								multiple *= factors.get(j);
+//							}
+//						}
+//						multiples.add(multiple);
+//					}
+//				}
+//				
+//				Integer min = multiples.floor(printHeight / 400);
+//				if(min == null) {
+//					min = multiples.ceiling(printHeight / 400);
+//				}
+//				if(min != null) {
+//					int imageWidth = printWidth / min;
+//					int imageHeight = printHeight / min;
+//
+//					ControlsPanel.this.imagePanel.setImageDimensions(imageWidth, imageHeight);
+//					ControlsPanel.this.imagePanel.draw();
+//				}
+				
+				int imageHeight = Math.min(printHeight, 450);
+				int imageWidth = printWidth * imageHeight / printHeight; 
+				
+				ControlsPanel.this.imagePanel.setImageDimensions(imageWidth, imageHeight);
+				ControlsPanel.this.imagePanel.draw();
 			}
 		});
 
@@ -216,13 +293,13 @@ public class ControlsPanel extends JPanel {
 					ControlsPanel.this.gradientCreator.repaint();
 				}
 
-				ControlsPanel.this.panel.draw();
+				ControlsPanel.this.imagePanel.draw();
 //TODO:				ControlsPanel.this.chooseColor.setBackground(selected.getColor());
 				ControlsPanel.this.iterationsField.setText(Integer.toString(selected.getIterations()));
 			}
 		});
 
-		this.gradientCreator = new GradientPanel(chooseColor, panel, gradientMap.get(drawingMethods.get(0)));
+		this.gradientCreator = new GradientPanel(chooseColor, imagePanel, gradientMap.get(drawingMethods.get(0)));
 
 		this.domainX = domainX;
 		this.domainY = domainY;
@@ -234,15 +311,15 @@ public class ControlsPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				DomainPanel panel = new DomainPanel(ControlsPanel.this.panel.getDomain());
+				DomainPanel panel = new DomainPanel(ControlsPanel.this.imagePanel.getDomain());
 				int option = JOptionPane.showInternalConfirmDialog(null, panel, "Domain Selection",
 						JOptionPane.OK_CANCEL_OPTION);
 				if (option == JOptionPane.OK_OPTION) {
 					try {
 						Rectangle2D domain = panel.getDomain();
-						ControlsPanel.this.panel.domainSetRect(domain.getX(), domain.getY(), domain.getWidth(),
+						ControlsPanel.this.imagePanel.domainSetRect(domain.getX(), domain.getY(), domain.getWidth(),
 								domain.getHeight());
-						ControlsPanel.this.panel.draw();
+						ControlsPanel.this.imagePanel.draw();
 					} catch (NumberFormatException e2) {
 
 					}
@@ -262,7 +339,7 @@ public class ControlsPanel extends JPanel {
 				if (option == JOptionPane.OK_OPTION) {
 					ControlsPanel.this.gradientCreator.setGradient(panel.getGradient());
 					ControlsPanel.this.gradientCreator.redraw();
-					ControlsPanel.this.panel.draw();
+					ControlsPanel.this.imagePanel.draw();
 				}
 			}
 		});
@@ -274,11 +351,16 @@ public class ControlsPanel extends JPanel {
 		domainPanel.add(this.domainW);
 		domainPanel.add(this.domainH);
 
+		JPanel printPanel = new JPanel();
+		printPanel.setLayout(new BoxLayout(printPanel, BoxLayout.Y_AXIS));
+		printPanel.add(printButton);
+		printPanel.add(printOptions);
+
 		this.add(gradientCreator);
 		this.add(chooseColor);
 		this.add(iterationsLabel);
 		this.add(iterationsField);
-		this.add(printButton);
+		this.add(printPanel);
 		this.add(list);
 		this.add(domainPanel);
 

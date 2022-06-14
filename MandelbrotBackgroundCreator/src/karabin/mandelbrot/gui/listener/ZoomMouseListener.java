@@ -21,10 +21,7 @@ import karabin.mandelbrot.utils.FractalUtils;
 public class ZoomMouseListener implements MouseWheelListener, MouseListener, MouseMotionListener, KeyListener {
 
 	private ImagePanel panel;
-	private int width;
-	private int height;
 
-	
 	private boolean fast;
 	private boolean panning;
 	private int x;
@@ -32,14 +29,12 @@ public class ZoomMouseListener implements MouseWheelListener, MouseListener, Mou
 	private double rx;
 	private double ry;
 
-	public ZoomMouseListener(ImagePanel panel, int width, int height) {
+	public ZoomMouseListener(ImagePanel panel) {
 		super();
 		this.panel = panel;
-		this.width = width;
-		this.height = height;
-		
+
 		this.panning = false;
-		
+
 		this.x = 0;
 		this.y = 0;
 		this.rx = 0;
@@ -48,21 +43,34 @@ public class ZoomMouseListener implements MouseWheelListener, MouseListener, Mou
 
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent e) {
-		if(panning) {
+		int minx = (this.panel.getWidth() - panel.getImage().getWidth()) / 2;
+		int miny = (this.panel.getHeight() - panel.getImage().getHeight()) / 2;
+		int maxx = minx + this.panel.getImage().getWidth();
+		int maxy = miny + this.panel.getImage().getHeight();
+		
+		if(e.getX() < minx || e.getX() > maxx) {
 			return;
 		}
 		
-		
+		if(e.getY() < miny || e.getY() > maxy) {
+			return;
+		}
+
+		if (panning) {
+			return;
+		}
+
 		this.panel.requestFocus();
 		Rectangle2D domain = panel.getDomain();
 
 		AffineTransform tr2 = new AffineTransform();
 		double rotation = e.getPreciseWheelRotation();
-		if(this.fast) {
+		if (this.fast) {
 			rotation *= 3;
 		}
 		double zoom = 1 + .1 * Math.abs(rotation);
-		Complex c = FractalUtils.pixelToComplex(e.getPoint().getX(), e.getPoint().getY(), width, height, domain);
+		Complex c = FractalUtils.pixelToComplex(e.getPoint().getX()-minx, e.getPoint().getY()-miny, panel.getImage().getWidth(),
+				panel.getImage().getHeight(), domain);
 		tr2.translate(c.getReal(), c.getImaginary());
 		tr2.scale(zoom, zoom);
 		tr2.translate(-c.getReal(), -c.getImaginary());
@@ -108,10 +116,10 @@ public class ZoomMouseListener implements MouseWheelListener, MouseListener, Mou
 	@Override
 	public void mousePressed(MouseEvent e) {
 		this.panning = true;
-		
+
 		this.x = e.getX();
 		this.y = e.getY();
-		
+
 		this.rx = this.panel.getDomain().getX();
 		this.ry = this.panel.getDomain().getY();
 	}
@@ -183,17 +191,18 @@ public class ZoomMouseListener implements MouseWheelListener, MouseListener, Mou
 	}
 
 	private void reDraw(int x, int y) {
-		Complex start = FractalUtils.pixelToComplex(this.x, this.y, width, height, panel.getDomain());
-		Complex end = FractalUtils.pixelToComplex(x, y, width, height, panel.getDomain());
+		Complex start = FractalUtils.pixelToComplex(this.x, this.y, panel.getImage().getWidth(),
+				panel.getImage().getHeight(), panel.getDomain());
+		Complex end = FractalUtils.pixelToComplex(x, y, panel.getImage().getWidth(), panel.getImage().getHeight(),
+				panel.getDomain());
 		Complex offset = start.subtract(end);
-		if(this.fast) {
+		if (this.fast) {
 			offset = offset.multiply(1.5);
 		}
-		
-		
+
 		Rectangle2D domain = panel.getDomain();
 
-		panel.domainSetRect(rx + offset.getReal(),ry + offset.getImaginary(), domain.getWidth(), domain.getHeight());
+		panel.domainSetRect(rx + offset.getReal(), ry + offset.getImaginary(), domain.getWidth(), domain.getHeight());
 
 		panel.draw();
 	}
@@ -204,14 +213,14 @@ public class ZoomMouseListener implements MouseWheelListener, MouseListener, Mou
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_CONTROL)  {
+		if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
 			this.fast = true;
 		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_CONTROL) {
+		if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
 			this.fast = false;
 		}
 	}

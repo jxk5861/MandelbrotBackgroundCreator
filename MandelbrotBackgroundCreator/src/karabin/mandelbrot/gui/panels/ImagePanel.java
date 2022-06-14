@@ -20,7 +20,7 @@ public class ImagePanel extends JPanel {
 	private static final long serialVersionUID = -8485184329163899100L;
 
 	private BufferedImage image;
-	private Rectangle2D domain = new Rectangle2D.Double(-2.5, -1, 3.5, 2);
+	private Rectangle2D domain;
 
 	private JLabel domainX;
 	private JLabel domainY;
@@ -38,6 +38,8 @@ public class ImagePanel extends JPanel {
 	};
 
 	public ImagePanel(int width, int height, JLabel domainX, JLabel domainY, JLabel domainW, JLabel domainH) {
+		this.domain = new Rectangle2D.Double(-2.5, -1, 3.5, 2);
+
 		this.domainX = domainX;
 		this.domainY = domainY;
 		this.domainW = domainW;
@@ -46,14 +48,22 @@ public class ImagePanel extends JPanel {
 		this.image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 		DrawingManager.INSTANCE.getSelected().draw(image, domain);
 
-		ZoomMouseListener listener = new ZoomMouseListener(this, width, height);
+		ZoomMouseListener listener = new ZoomMouseListener(this);
 		this.addMouseWheelListener(listener);
 		this.addMouseListener(listener);
 		this.addMouseMotionListener(listener);
 		this.addKeyListener(listener);
 
-		this.setPreferredSize(new Dimension(width, height));
+		this.setPreferredSize(new Dimension(width, height+50));
 		this.setFocusable(true);
+	}
+
+	/**
+	 * Set new dimensions for the image. This is useful for switching between
+	 * different printing resolutions such as 16:9 or IPhone 13 resolution.
+	 */
+	public void setImageDimensions(int width, int height) {
+		this.image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 	}
 
 	/**
@@ -62,7 +72,11 @@ public class ImagePanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		g.drawImage(image, 0, 0, null);
+		
+		int x = (this.getWidth() - image.getWidth()) / 2;
+		int y = (this.getHeight() - image.getHeight()) / 2;
+		
+		g.drawImage(image, x, y, null);
 	}
 
 	/**
